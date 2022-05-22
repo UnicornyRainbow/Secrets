@@ -1,3 +1,12 @@
+# custom, mostly for flatpak
+.flatpak-builder
+build
+repo
+.git
+.flatpak
+
+# Github auto generated
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
