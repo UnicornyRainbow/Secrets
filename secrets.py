@@ -35,7 +35,7 @@ class window(Gtk.ApplicationWindow):
 
         #window
         Gtk.Window.__init__(self, title='Secrets')
-        self.set_default_size(960, 540)
+        self.set_default_size(450, 540)
 
 
         #Define the General structure of the Window
@@ -79,7 +79,7 @@ class window(Gtk.ApplicationWindow):
         #self.headerBar.pack_end(self.hideSwitch)
 
         #Populate the Window itself
-        self.passwordBox = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = self.spacing, hexpand = True)
+        self.passwordBox = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = self.spacing)
         self.mainBox.append(self.passwordBox)
         self.password = Gtk.Entry(placeholder_text = "Password", editable = False, secondary_icon_name = "eye-open-negative-filled-symbolic", visibility = False, hexpand = True)
         self.password.connect("icon_press", self.hideClicked, Gtk.EntryIconPosition.SECONDARY)
@@ -87,7 +87,47 @@ class window(Gtk.ApplicationWindow):
         self.copyPasswordButton = Gtk.Button(label = "Copy")
         self.copyPasswordButton.connect("clicked", self.copyPasswordClicked)
         self.passwordBox.append(self.copyPasswordButton)
-        self.settingsBox = Gtk.Box(orientation = Gtk.Orientation.VERTICAL, spacing = self.spacing)
+        self.settingsBox1 = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = self.spacing, homogeneous = True)
+        self.lengthSpinAdjustment = Gtk.Adjustment(upper = 100, step_increment = 1, page_increment = 10)
+        self.lengthSpin = Gtk.SpinButton(adjustment = self.lengthSpinAdjustment, value = 20, numeric = True)
+        self.settingsBox1.append(self.lengthSpin)
+        self.useDigits = Gtk.CheckButton(active = True, label = "Digits")
+        self.settingsBox1.append(self.useDigits)
+        self.mainBox.append(self.settingsBox1)
+        self.settingsBox2 = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = self.spacing, homogeneous = True)
+        self.useUpperCase = Gtk.CheckButton(active = True, label = "Uppercase Letters")
+        self.settingsBox2.append(self.useUpperCase)
+        self.useLowerCase = Gtk.CheckButton(active = True, label = "Lowercase Letters")
+        self.settingsBox2.append(self.useLowerCase)
+        self.settingsBox3 = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = self.spacing, homogeneous = True)
+        self.useDigits = Gtk.CheckButton(active = True, label = "Digits")
+        self.useSpecialCharacters = Gtk.CheckButton(active = True, label = "Special Characters")
+        self.settingsBox3.append(self.useSpecialCharacters)
+        self.useExtendedSpecialCharacters = Gtk.CheckButton(active = False, label = "Extended Characters")
+        self.settingsBox3.append(self.useExtendedSpecialCharacters)
+        self.mainBox.append(self.settingsBox3)
+        self.settingsBox4 = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = self.spacing)
+        self.editSpecialCharacters = Gtk.ToggleButton(active = False, label = "Edit Special")
+        self.editSpecialCharacters.connect("toggled", self.editSpecialClicked)
+        self.settingsBox4.append(self.editSpecialCharacters)
+        self.specialCharacters = Gtk.Entry(placeholder_text = "Special Characters", editable = False, hexpand = True)
+        self.specialCharacters.set_text("@ % + \ / ' ! # $ ^ ? ; , ( ) { } [ ] ~ ` - _ .")
+        self.settingsBox4.append(self.specialCharacters)
+        self.mainBox.append(self.settingsBox4)
+        self.settingsBox5 = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = self.spacing)
+        self.editExtendedSpecialCharacters = Gtk.ToggleButton(active = False, label = "Edit Extended")
+        self.editExtendedSpecialCharacters.connect("toggled", self.editExtendedSpecialClicked)
+        self.settingsBox5.append(self.editExtendedSpecialCharacters)
+        self.extendedSpecialCharacters = Gtk.Entry(placeholder_text = "Extended Characters", editable = False, hexpand = True)
+        self.extendedSpecialCharacters.set_text('* + : < > = | "')
+        self.settingsBox5.append(self.extendedSpecialCharacters)
+        self.mainBox.append(self.settingsBox5)
+        
+    def editExtendedSpecialClicked(self, widget):
+        self.extendedSpecialCharacters.set_editable(widget.get_active())
+
+    def editSpecialClicked(self, widget):
+        self.specialCharacters.set_editable(widget.get_active())
 
     def copyPasswordClicked(self, widget):
         Gdk.Display.get_clipboard(Gdk.Display.get_default()).set_content(Gdk.ContentProvider.new_for_value(self.password.get_text()))
