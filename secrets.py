@@ -19,6 +19,7 @@
 
 import gi
 import sys
+import random
 gi.require_version('Gtk','4.0')
 gi.require_version('Gdk','4.0')
 gi.require_version('Adw', '1')
@@ -32,6 +33,12 @@ class window(Gtk.ApplicationWindow):
         super().__init__(*args, **kwargs)
 
         self.spacing = 10
+
+        self.uchars = ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+        self.lchars = ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+        self.digits = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+        self.schars = ("@", "%", "+", "\\", "/", "'", "!", "#", "$", "^", "?", ";", ",", "(", ")", "{", "}", "[", "]", "~", "`", "-", "_", ".")
+        self.echars = ('*', '+', ':', '<', '>', '=', '|', '"')
 
         #window
         Gtk.Window.__init__(self, title='Secrets')
@@ -74,9 +81,6 @@ class window(Gtk.ApplicationWindow):
         self.generateButton = Gtk.Button(label = "Generate")
         self.generateButton.connect("clicked", self.generateClicked)
         self.headerBar.pack_start(self.generateButton)
-        #hide/show Password toggle
-        #self.hideSwitch = Gtk.Switch()
-        #self.headerBar.pack_end(self.hideSwitch)
 
         #Populate the Window itself
         self.passwordBox = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = self.spacing)
@@ -87,39 +91,44 @@ class window(Gtk.ApplicationWindow):
         self.copyPasswordButton = Gtk.Button(label = "Copy")
         self.copyPasswordButton.connect("clicked", self.copyPasswordClicked)
         self.passwordBox.append(self.copyPasswordButton)
+
         self.settingsBox1 = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = self.spacing, homogeneous = True)
         self.lengthSpinAdjustment = Gtk.Adjustment(upper = 100, step_increment = 1, page_increment = 10)
-        self.lengthSpin = Gtk.SpinButton(adjustment = self.lengthSpinAdjustment, value = 20, numeric = True)
+        self.lengthSpin = Gtk.SpinButton(adjustment = self.lengthSpinAdjustment, value = 15, numeric = True)
         self.settingsBox1.append(self.lengthSpin)
         self.useDigits = Gtk.CheckButton(active = True, label = "Digits")
         self.settingsBox1.append(self.useDigits)
         self.mainBox.append(self.settingsBox1)
+
         self.settingsBox2 = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = self.spacing, homogeneous = True)
         self.useUpperCase = Gtk.CheckButton(active = True, label = "Uppercase Letters")
         self.settingsBox2.append(self.useUpperCase)
         self.useLowerCase = Gtk.CheckButton(active = True, label = "Lowercase Letters")
         self.settingsBox2.append(self.useLowerCase)
+        self.mainBox.append(self.settingsBox2)
+
         self.settingsBox3 = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = self.spacing, homogeneous = True)
-        self.useDigits = Gtk.CheckButton(active = True, label = "Digits")
         self.useSpecialCharacters = Gtk.CheckButton(active = True, label = "Special Characters")
         self.settingsBox3.append(self.useSpecialCharacters)
         self.useExtendedSpecialCharacters = Gtk.CheckButton(active = False, label = "Extended Characters")
         self.settingsBox3.append(self.useExtendedSpecialCharacters)
         self.mainBox.append(self.settingsBox3)
+
         self.settingsBox4 = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = self.spacing)
         self.editSpecialCharacters = Gtk.ToggleButton(active = False, label = "Edit Special")
         self.editSpecialCharacters.connect("toggled", self.editSpecialClicked)
         self.settingsBox4.append(self.editSpecialCharacters)
         self.specialCharacters = Gtk.Entry(placeholder_text = "Special Characters", editable = False, hexpand = True)
-        self.specialCharacters.set_text("@ % + \ / ' ! # $ ^ ? ; , ( ) { } [ ] ~ ` - _ .")
+        self.specialCharacters.set_text(" ".join(self.schars))
         self.settingsBox4.append(self.specialCharacters)
         self.mainBox.append(self.settingsBox4)
+
         self.settingsBox5 = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = self.spacing)
         self.editExtendedSpecialCharacters = Gtk.ToggleButton(active = False, label = "Edit Extended")
         self.editExtendedSpecialCharacters.connect("toggled", self.editExtendedSpecialClicked)
         self.settingsBox5.append(self.editExtendedSpecialCharacters)
         self.extendedSpecialCharacters = Gtk.Entry(placeholder_text = "Extended Characters", editable = False, hexpand = True)
-        self.extendedSpecialCharacters.set_text('* + : < > = | "')
+        self.extendedSpecialCharacters.set_text(" ".join(self.echars))
         self.settingsBox5.append(self.extendedSpecialCharacters)
         self.mainBox.append(self.settingsBox5)
         
@@ -141,10 +150,37 @@ class window(Gtk.ApplicationWindow):
             widget.set_icon_from_icon_name(Gtk.Orientation.VERTICAL, "eye-open-negative-filled-symbolic")
 
     def generateClicked(self, widget):
-        self.password.set_text("test")
+        self.secret = []
+        self.chars = []
+        if self.useDigits.get_active() == True:
+            print("Digits")
+            for item in self.digits:
+                self.chars.append(item)
+        if self.useUpperCase.get_active() == True:
+            print("Upper")
+            for item in self.uchars:
+                self.chars.append(item)
+        if self.useLowerCase.get_active() == True:
+            print("Lower")
+            for item in self.lchars:
+                self.chars.append(item)
+        if self.useSpecialCharacters.get_active() == True:
+            print("Special")
+            for item in self.schars:
+                self.chars.append(item)
+        if self.useExtendedSpecialCharacters.get_active() == True:
+            print("extended")
+            for item in self.echars:
+                self.chars.append(item)
+        for i in range(int(self.lengthSpin.get_value())):
+            self.secret.append(random.choice(self.chars))
+        self.password.set_text("".join(self.secret))
 
     def aboutClicked(self, widget):
-        self.dialog = Gtk.AboutDialog(authors = ['Unicorn'], artists= ['Unicorn'], comments = 'Easily generate passwords with different conditions to fit the requirements of various websites and apps.', license_type = Gtk.License.GPL_3_0_ONLY, program_name = 'Secrets', version = '1.0.0', website_label = 'Github', website = 'https://github.com/UnicornyRainbow/Secrets')
+        self.dialog = Gtk.AboutDialog(authors = ['Unicorn'], artists= ['Unicorn'],
+                                        comments = 'Easily generate passwords with different conditions to fit the requirements of various websites and apps.',
+                                        license_type = Gtk.License.GPL_3_0_ONLY, program_name = 'Secrets', version = '1.0.0',
+                                        website_label = 'Github', website = 'https://github.com/UnicornyRainbow/Secrets')
         self.dialog.set_logo_icon_name('secrets')
         self.dialog.show()
 
