@@ -1,6 +1,6 @@
 # Secrets
 
-![secrets.png](https://https://unicornyrainbow.github.io/Secrets/secrets.png)
+![secrets.png](https://https://unicornyrainbow.github.io/Secrets/secrets.png){:class="img-responsive"}
 
 A small app written in Python, Gtk4 and Libadwaita that can generate passwords.
 Users are able to choose what characters they want to use.
