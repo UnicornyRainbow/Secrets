@@ -1,5 +1,5 @@
 # Secrets, easily generate passwords.
-#     Copyright (C) 2022  Unicorn
+#     Copyright (C) 2022  UnicornyRainbow
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@ gi.require_version('Gdk','4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, Gdk, Gio
 
-#@Gtk.Template(filename="/app/bin/secrets.ui") #for flatpak
-@Gtk.Template(filename="secrets.ui")           #for debug
+@Gtk.Template(filename="/app/bin/secrets.ui") #for flatpak
+#@Gtk.Template(filename="secrets.ui")           #for debug
 class main_window(Gtk.Window):
     __gtype_name__ = "main_window"
 
@@ -109,13 +109,13 @@ class MyApp(Adw.Application):
         window.present()
 
     def showAbout(self, *args):
-        self.dialog = Gtk.AboutDialog(authors = ['Unicorn'], artists= ['Unicorn'],
+        self.dialog = Gtk.AboutDialog(authors = ['Unicornyrainbow'], artists= ['Unicornyrainbow'],
                                         comments = 'Easily generate passwords with different conditions to fit the requirements of various websites and apps.',
                                         license_type = Gtk.License.GPL_3_0_ONLY, program_name = 'Secrets', version = '1.0.0',
-                                        website_label = 'Github', website = 'https://github.com/UnicornyRainbow/Secrets')
+                                        website_label = 'Website', website = 'https://unicornyrainbow.github.io/Secrets/')
         self.dialog.set_logo_icon_name('secrets')
         self.dialog.show()
 
 
-app2=MyApp(application_id='io.github.unicorn.secrets', flags=Gio.ApplicationFlags.FLAGS_NONE)
+app2=MyApp(application_id='io.github.unicornyrainbow.secrets', flags=Gio.ApplicationFlags.FLAGS_NONE)
 app2.run(sys.argv)
