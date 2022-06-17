@@ -23,8 +23,8 @@ gi.require_version('Gdk','4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, Gdk, Gio
 
-@Gtk.Template(filename="/app/bin/secrets.ui") #for flatpak
-#@Gtk.Template(filename="secrets.ui")           #for debug
+#@Gtk.Template(filename="/app/bin/secrets.ui") #for flatpak
+@Gtk.Template(filename="secrets.ui")           #for debug
 class main_window(Gtk.Window):
     __gtype_name__ = "main_window"
 
@@ -109,7 +109,7 @@ class MyApp(Adw.Application):
         window.present()
 
     def showAbout(self, *args):
-        self.dialog = Gtk.AboutDialog(authors = ['Unicornyrainbow'], artists= ['Unicornyrainbow'],
+        self.dialog = Gtk.AboutDialog(authors = ['UnicornyRainbow'], artists= ['UnicornyRainbow'],
                                         comments = 'Easily generate passwords with different conditions to fit the requirements of various websites and apps.',
                                         license_type = Gtk.License.GPL_3_0_ONLY, program_name = 'Secrets', version = '1.0.0',
                                         website_label = 'Website', website = 'https://unicornyrainbow.github.io/Secrets/')
