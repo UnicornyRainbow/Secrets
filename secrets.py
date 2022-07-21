@@ -23,11 +23,14 @@ gi.require_version('Gdk','4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, Gdk, Gio
 
-#@Gtk.Template(filename="/app/bin/secrets.ui") #for flatpak
-@Gtk.Template(filename="secrets.ui")           #for debug
+@Gtk.Template(filename="/app/bin/secrets.ui") #for flatpak
+#@Gtk.Template(filename="secrets.ui")           #for debug
 class main_window(Gtk.Window):
     __gtype_name__ = "main_window"
 
+    mainBox = Gtk.Template.Child()
+    popover = Gtk.Template.Child()
+    popoverBox = Gtk.Template.Child()
     password = Gtk.Template.Child()
     specialCharacters = Gtk.Template.Child()
     extendedSpecialCharacters = Gtk.Template.Child()
@@ -37,6 +40,7 @@ class main_window(Gtk.Window):
     useSpecialCharacters = Gtk.Template.Child()
     useExtendedSpecialCharacters = Gtk.Template.Child()
     lengthSpin = Gtk.Template.Child()
+    aboutDialog = Gtk.Template.Child()
 
     uchars = ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
     lchars = ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
@@ -82,6 +86,7 @@ class main_window(Gtk.Window):
 
     @Gtk.Template.Callback()
     def copyPasswordClicked(self, widget):
+        print("2")
         Gdk.Display.get_clipboard(Gdk.Display.get_default()).set_content(Gdk.ContentProvider.new_for_value(self.password.get_text()))
 
     @Gtk.Template.Callback()
@@ -91,6 +96,11 @@ class main_window(Gtk.Window):
     @Gtk.Template.Callback()
     def editExtendedSpecialClicked(self, widget):
         self.extendedSpecialCharacters.set_editable(widget.get_active())
+        
+    @Gtk.Template.Callback()
+    def aboutClicked(self, *args):
+        self.aboutDialog.set_logo_icon_name("io.github.unicornyrainbow.secrets")
+        self.aboutDialog.show()
     
 
 class MyApp(Adw.Application):
@@ -100,21 +110,14 @@ class MyApp(Adw.Application):
 
     def on_activate(self, app):
         window = main_window(application = self)
+
+        window.mainBox.remove(window.mainBox.get_first_child())
+        window.popover.set_child(window.popoverBox)
+
         window.specialCharacters.set_text(" ".join(window.schars))
         window.extendedSpecialCharacters.set_text(" ".join(window.echars))
         window.lengthSpin.set_value(20)
-        action = Gio.SimpleAction(name="about")
-        action.connect("activate", self.showAbout)
-        self.add_action(action)
         window.present()
-
-    def showAbout(self, *args):
-        self.dialog = Gtk.AboutDialog(authors = ['UnicornyRainbow'], artists= ['UnicornyRainbow'],
-                                        comments = 'Easily generate passwords with different conditions to fit the requirements of various websites and apps.',
-                                        license_type = Gtk.License.GPL_3_0_ONLY, program_name = 'Secrets', version = '1.0.0',
-                                        website_label = 'Website', website = 'https://unicornyrainbow.github.io/Secrets/')
-        self.dialog.set_logo_icon_name('secrets')
-        self.dialog.show()
 
 
 app2=MyApp(application_id='io.github.unicornyrainbow.secrets', flags=Gio.ApplicationFlags.FLAGS_NONE)
