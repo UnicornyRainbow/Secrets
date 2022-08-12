@@ -8,7 +8,7 @@ Thank you for installing Secrets! There are multiple ways to install it:
 The packagemanager/ packagig format used(you don't need this, if you run it directly from source and don't install it):\
 Fedora: `sudo dnf install flatpak`\
 Ubuntu: `sudo apt install flatpak`\
-Arch: `sudo pacman -S flatpak`\
+Arch: `sudo pacman -S flatpak`
 
 Then add flathub: `flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo`
 
