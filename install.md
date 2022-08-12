@@ -23,7 +23,7 @@ Then open the file in your file manager and double click it, it should open your
 ### Command Line
 Download it with
 * `wget https://github.com/UnicornyRainbow/Secrets/releases/latest/download/secrets.flatpak` for x86
-* `wget https://github.com/UnicornyRainbow/Secrets/releases/latest/download/secrets_aarch.flatpak` for aarch
+* `wget https://github.com/UnicornyRainbow/Secrets/releases/latest/download/secrets_aarch.flatpak` for aarch\
 then install it
 * `sudo flatpak install secrets.flatpak` or
 * `sudo flatpak install secrets_aarch.flatpak`
