@@ -9,5 +9,5 @@ The app is **NOT** intended to replace your passwordmanager but as a backup solu
 
 Some important links: 
 * View the sourcecode on [Github](https://github.com/UnicornyRainbow/Secrets) or [GitLab](https://gitlab.com/UnicornyRainbow/Secrets)
-* Or [install](https://UnicornyRainbow.io/Secrets/install) Secrets.
+* Or [install](https://UnicornyRainbow.github.io/Secrets/install) Secrets.
 * Take a look at my other [projects](https://UnicornyRainbow.github.io/UnicornyRainbow/myProjects)
