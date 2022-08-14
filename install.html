@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UnicornyRainbow - Secrets - Installation</title>
+  <link rel="canonical" href="https://unicornyrainbow.github.io/Secrets/install" />
+  <meta property="og:url" content="https://unicornyrainbow.github.io/Secrets/install" />
+  <meta property="og:site_name" content="Installation" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="twitter:title" content="Installation" />
+  <link rel="shortcut icon" type="image/png" href="https://unicornyrainbow.github.io/UnicornyRainbow/assets/me.png?">
+  <link rel="stylesheet" href="/UnicornyRainbow/assets/css/style.css?v=dbb2dc5cc0b05a8b5e2579d51fdcb1bb59eca7fd">
+  <link rel="stylesheet" type="text/css" href="https://unicornyrainbow.github.io/UnicornyRainbow/assets/my-style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebSite","description":"Installation","headline":"Installation","name":"Installation","url":"https://unicornyrainbow.github.io/Secrets/install"}</script>
+</head>
+<body>
+<nav>
+  <ul>
+    <li>
+        <a href="https://unicornyrainbow.github.io/UnicornyRainbow"><img src="https://unicornyrainbow.github.io/UnicornyRainbow/assets/me.png" height="45" style="border-radius: 50%;"/></a>
+    </li>
+    <li>
+        <a class="navbar-link" href="https://unicornyrainbow.github.io/Codey">Codey</a>
+    </li>
+    <li>
+        <a class="navbar-link" href="https://unicornyrainbow.github.io/Organizer">Organizer</a>
+    </li>
+    <li>
+        <a class="navbar-link" href="https://unicornyrainbow.github.io/Secrets">Secrets</a>
+    </li>
+    <li>
+        <a class="active navbar-link" href="https://unicornyrainbow.github.io/Secrets/install">Installation</a>
+    </li>
+  </ul>
+</nav>
+<div class="container-lg py-5 px-5">
+  <h1 id="installation">Installation</h1>
+  <hr/>
+  <p>Thank you for installing Secrets! There are multiple ways to install it:</p>
+  <h2 id="dependencies">Dependencies</h2>
+  <hr/>
+  <h3 id="flatpak">Flatpak</h3>
+  <p>
+    The packagemanager/ packagig format used(you don’t need this, if you run it directly from source and don’t install it):<br />
+    Fedora: <code class="language-plaintext highlighter-rouge">sudo dnf install flatpak</code><br />
+    Ubuntu: <code class="language-plaintext highlighter-rouge">sudo apt install flatpak</code><br />
+    Arch: <code class="language-plaintext highlighter-rouge">sudo pacman -S flatpak</code>
+  </p>
+  <p>Then add flathub: <code class="language-plaintext highlighter-rouge">flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo</code></p>
+  <p>Or follow the <a href="https://www.flatpak.org/setup/">official instructions</a></p>
+  <h2 id="installation">Installation</h2>
+  <hr/>
+  <h3 id="graphical">Graphical</h3>
+  <p>
+    Go to the <a href="https://github.com/UnicornyRainbow/Secrets/releases/latest">latest release</a> and download the correct file for your cpu architecture (if you are not sure, give secrets.flatpak a try).<br />
+    Then open the file in your file manager and double click it, it should open your graphical package manager /software store, then click on install.
+  </p>
+  <h3 id="command-line">Command Line</h3>
+  <p>Download it with</p>
+  <ul>
+    <li><code class="language-plaintext highlighter-rouge">wget https://github.com/UnicornyRainbow/Secrets/releases/latest/download/secrets.flatpak</code> for x86</li>
+    <li><code class="language-plaintext highlighter-rouge">wget https://github.com/UnicornyRainbow/Secrets/releases/latest/download/secrets_aarch.flatpak</code> for aarch</li>
+  </ul>
+  then install it
+  <ul>
+    <li><code class="language-plaintext highlighter-rouge">sudo flatpak install secrets.flatpak</code> or</li>
+    <li><code class="language-plaintext highlighter-rouge">sudo flatpak install secrets_aarch.flatpak</code></li>
+  </ul>
+  <h3 id="build-it-on-your-own">Build it on your own</h3>
+  <p>
+    Download the the source code from the <a href="https://github.com/UnicornyRainbow/Secrets/releases/latest">latest release</a>, then unpack it and open a terminal in the folder.<br />
+    To always have the most current (maybe not stable) version, run <code class="language-plaintext highlighter-rouge">git clone https://github.com/UnicornyRainbow/Secrets</code>, then <code class="language-plaintext highlighter-rouge">cd Secrets</code>.
+  </p>
+  <p>
+    Now that you have a terminal opened in the folder with source code, make the build script executable <code class="language-plaintext highlighter-rouge">chmod +x flatpak_build.sh</code>, then run it <code class="language-plaintext highlighter-rouge">./flatpak_build.sh</code>.
+    It builds a .flatpak file you can distribute and also installs it on your system.
+  </p>
+  <hr/>
+  <table class="footer border-gray-light mt-5 text-gray" style="width:100%;">
+    <tbody><tr>
+      <td style="text-align: left;">&copy; 2022 UnicornyRainbow</td>
+      <td style="text-align: right;">This site is open source. <a href="https://github.com/UnicornyRainbow/Secrets/edit/docs/install.html">Improve this page</a>.</td>
+    </tr></tbody>
+  </table>
+</div>
+</body>
+</html>
+
+
