@@ -3,7 +3,7 @@
 build
 repo
 .git
-.flatpak
+*.flatpak
 
 # Github auto generated
 

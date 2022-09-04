@@ -23,8 +23,12 @@ gi.require_version('Gdk','4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, Gdk, Gio
 
-@Gtk.Template(filename="/app/bin/secrets.ui") #for flatpak
-#@Gtk.Template(filename="secrets.ui")           #for debug
+if __debug__:
+    uipath = "secrets.ui"
+else:
+    uipath = "/app/bin/secrets.ui"
+
+@Gtk.Template(filename=uipath)
 class main_window(Gtk.Window):
     __gtype_name__ = "main_window"
 
@@ -120,5 +124,5 @@ class MyApp(Adw.Application):
         window.present()
 
 
-app2=MyApp(application_id='io.github.unicornyrainbow.secrets', flags=Gio.ApplicationFlags.FLAGS_NONE)
+app2 = MyApp(application_id='io.github.unicornyrainbow.secrets', flags=Gio.ApplicationFlags.FLAGS_NONE)
 app2.run(sys.argv)
