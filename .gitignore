@@ -4,6 +4,7 @@ build
 repo
 .git
 *.flatpak
+.idea
 
 # Github auto generated
 
