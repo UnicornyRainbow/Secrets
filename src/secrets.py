@@ -22,10 +22,11 @@ import random
 gi.require_version('Gtk', '4.0')
 gi.require_version('Gdk', '4.0')
 gi.require_version('Adw', '1')
+
 from gi.repository import Gtk, Adw, Gdk, Gio
 
 if __debug__:
-    uipath = "res/secrets.ui"
+    uipath = "src/res/secrets.ui"
 else:
     uipath = "/app/bin/secrets.ui"
 
@@ -49,17 +50,17 @@ class MainWindow(Gtk.Window):
     aboutDialog = Gtk.Template.Child()
 
     uchars: tuple[str] = ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
-    lchars = ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
-    digits = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
-    schars = ("@", "%", "+", "\\", "/", "'", "!", "#", "$", "^", "?", ";", ",", "(", ")", "{", "}", "[", "]", "~", "`", "-", "_", ".")
-    echars = ('*', '+', ':', '<', '>', '=', '|', '"')
+    lchars: tuple[str] = ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+    digits: tuple[str] = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+    schars: tuple[str] = ("@", "%", "+", "\\", "/", "'", "!", "#", "$", "^", "?", ";", ",", "(", ")", "{", "}", "[", "]", "~", "`", "-", "_", ".")
+    echars: tuple[str] = ('*', '+', ':', '<', '>', '=', '|', '"')
 
     @Gtk.Template.Callback()
     def on_destroy(self, *args):
         Gtk.main_quit()
 
     @Gtk.Template.Callback()
-    def generate_clicked(self, widget):
+    def generate_clicked(self, widget: Gtk.Button):
         secret = []
         chars = []
         if self.useDigits.get_active():
@@ -82,7 +83,7 @@ class MainWindow(Gtk.Window):
         self.password.set_text("".join(secret))
 
     @Gtk.Template.Callback()
-    def hide_clicked(self, widget: Gtk.Entry, position):
+    def hide_clicked(self, widget: Gtk.Entry, position: Gtk.EntryIconPosition):
         if not widget.get_visibility():
             widget.set_visibility(True)
             widget.set_icon_from_icon_name(Gtk.Orientation.VERTICAL, "eye-not-looking-symbolic")
@@ -91,17 +92,16 @@ class MainWindow(Gtk.Window):
             widget.set_icon_from_icon_name(Gtk.Orientation.VERTICAL, "eye-open-negative-filled-symbolic")
 
     @Gtk.Template.Callback()
-    def copy_password_clicked(self, widget):
-        print("2")
+    def copy_password_clicked(self, widget: Gtk.Button):
         Gdk.Display.get_clipboard(Gdk.Display.get_default()).set_content(
             Gdk.ContentProvider.new_for_value(self.password.get_text()))
 
     @Gtk.Template.Callback()
-    def edit_special_clicked(self, widget):
+    def edit_special_clicked(self, widget: Gtk.ToggleButton):
         self.specialCharacters.set_editable(widget.get_active())
 
     @Gtk.Template.Callback()
-    def edit_extended_special_clicked(self, widget):
+    def edit_extended_special_clicked(self, widget: Gtk.ToggleButton):
         self.extendedSpecialCharacters.set_editable(widget.get_active())
 
     @Gtk.Template.Callback()
