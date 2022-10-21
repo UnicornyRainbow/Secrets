@@ -32,7 +32,7 @@ else:
 
 
 @Gtk.Template(filename=uipath)
-class MainWindow(Gtk.Window):
+class MainWindow(Adw.Window):
     __gtype_name__ = "MainWindow"
 
     mainBox = Gtk.Template.Child()
@@ -53,7 +53,14 @@ class MainWindow(Gtk.Window):
     lchars: tuple[str] = ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
     digits: tuple[str] = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
     schars: tuple[str] = ("@", "%", "+", "\\", "/", "'", "!", "#", "$", "^", "?", ";", ",", "(", ")", "{", "}", "[", "]", "~", "`", "-", "_", ".")
-    echars: tuple[str] = ('*', '+', ':', '<', '>', '=', '|', '"')
+    echars: tuple[str] = ('*', ':', '<', '>', '=', '|', '"')
+
+    @staticmethod
+    def check_secret(secret: list[str], superchars: list[tuple[str]]):
+        for chars in superchars:
+            if not set(secret) & set(chars):
+                return False
+        return True
 
     @Gtk.Template.Callback()
     def on_destroy(self, *args):
@@ -63,24 +70,33 @@ class MainWindow(Gtk.Window):
     def generate_clicked(self, widget: Gtk.Button):
         secret = []
         chars = []
+        superchars = []
         if self.useDigits.get_active():
+            superchars.append(self.digits)
             for item in self.digits:
                 chars.append(item)
         if self.useUpperCase.get_active():
+            superchars.append(self.uchars)
             for item in self.uchars:
                 chars.append(item)
         if self.useLowerCase.get_active():
+            superchars.append(self.lchars)
             for item in self.lchars:
                 chars.append(item)
         if self.useSpecialCharacters.get_active():
+            superchars.append(self.schars)
             for item in self.schars:
                 chars.append(item)
         if self.useExtendedSpecialCharacters.get_active():
+            superchars.append(self.echars)
             for item in self.echars:
                 chars.append(item)
         for i in range(int(self.lengthSpin.get_value())):
             secret.append(random.choice(chars))
-        self.password.set_text("".join(secret))
+        if self.check_secret(secret, superchars):
+            self.password.set_text("".join(secret))
+        else:
+            self.generate_clicked(widget)
 
     @Gtk.Template.Callback()
     def hide_clicked(self, widget: Gtk.Entry, position: Gtk.EntryIconPosition):
@@ -106,7 +122,6 @@ class MainWindow(Gtk.Window):
 
     @Gtk.Template.Callback()
     def about_clicked(self, *args):
-        self.aboutDialog.set_logo_icon_name("io.github.unicornyrainbow.secrets")
         self.aboutDialog.show()
 
 
