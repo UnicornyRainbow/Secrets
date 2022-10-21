@@ -1,2 +1,2 @@
 #!/bin/sh
-python3 -O /app/bin/secrets.py
+python3 -O /app/bin/secrets_main.py
