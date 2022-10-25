@@ -41,46 +41,57 @@
 </nav>
 <div class="container-lg py-5 px-5">
   <h1 id="installation">Installation</h1>
-  <hr/>
-  <p>Thank you for installing Secrets! There are multiple ways to install it:</p>
-  <h2 id="dependencies">Dependencies</h2>
-  <hr/>
-  <h3 id="flatpak">Flatpak</h3>
-  <p>
-    The packagemanager/ packagig format used(you don’t need this, if you run it directly from source and don’t install it):<br />
-    Fedora: <code class="language-plaintext highlighter-rouge">sudo dnf install flatpak</code><br />
-    Ubuntu: <code class="language-plaintext highlighter-rouge">sudo apt install flatpak</code><br />
-    Arch: <code class="language-plaintext highlighter-rouge">sudo pacman -S flatpak</code>
-  </p>
-  <p>Then add flathub: <code class="language-plaintext highlighter-rouge">flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo</code></p>
-  <p>Or follow the <a href="https://www.flatpak.org/setup/">official instructions</a></p>
-  <h2 id="installation">Installation</h2>
-  <hr/>
-  <h3 id="graphical">Graphical</h3>
-  <p>
-    Go to the <a href="https://github.com/UnicornyRainbow/Secrets/releases/latest">latest release</a> and download the correct file for your cpu architecture (if you are not sure, give secrets.flatpak a try).<br />
-    Then open the file in your file manager and double click it, it should open your graphical package manager /software store, then click on install.
-  </p>
-  <h3 id="command-line">Command Line</h3>
-  <p>Download it with</p>
-  <ul>
-    <li><code class="language-plaintext highlighter-rouge">wget https://github.com/UnicornyRainbow/Secrets/releases/latest/download/secrets.flatpak</code> for x86</li>
-    <li><code class="language-plaintext highlighter-rouge">wget https://github.com/UnicornyRainbow/Secrets/releases/latest/download/secrets_aarch.flatpak</code> for aarch</li>
-  </ul>
-  then install it
-  <ul>
-    <li><code class="language-plaintext highlighter-rouge">sudo flatpak install secrets.flatpak</code> or</li>
-    <li><code class="language-plaintext highlighter-rouge">sudo flatpak install secrets_aarch.flatpak</code></li>
-  </ul>
-  <h3 id="build-it-on-your-own">Build it on your own</h3>
-  <p>
-    Download the the source code from the <a href="https://github.com/UnicornyRainbow/Secrets/releases/latest">latest release</a>, then unpack it and open a terminal in the folder.<br />
-    To always have the most current (maybe not stable) version, run <code class="language-plaintext highlighter-rouge">git clone https://github.com/UnicornyRainbow/Secrets</code>, then <code class="language-plaintext highlighter-rouge">cd Secrets</code>.
-  </p>
-  <p>
-    Now that you have a terminal opened in the folder with source code, make the build script executable <code class="language-plaintext highlighter-rouge">chmod +x flatpak_build.sh</code>, then run it <code class="language-plaintext highlighter-rouge">./flatpak_build.sh</code>.
-    It builds a .flatpak file you can distribute and also installs it on your system.
-  </p>
+    <hr/>
+    <p>Thank you for installing Secrets! There are multiple ways to install it:</p>
+    <h2 id="dependencies">Dependencies</h2>
+      <hr/>
+      <h3 id="flatpak">Flatpak</h3>
+        <p>
+          The packagemanager/ packagig format used:<br />
+          Fedora: <code class="language-plaintext highlighter-rouge">sudo dnf install flatpak</code><br />
+          Ubuntu: <code class="language-plaintext highlighter-rouge">sudo apt install flatpak</code><br />
+          Arch: <code class="language-plaintext highlighter-rouge">sudo pacman -S flatpak</code>
+        </p>
+        <p>Then add flathub: <code class="language-plaintext highlighter-rouge">flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo</code></p>
+        <p>Or follow the <a href="https://www.flatpak.org/setup/">official instructions</a></p>
+        <p>If you build it your self, you also need the Gnome 43 Runtime and Sdk, if you download it from Flathub, they should be installed automatically</p>
+    <h2 id="installation">Installation</h2>
+      <hr/>
+      <h3 id="graphical">Graphical</h3>
+        <p>
+          After you have added Flathub, you should be able to go to your graphical "App Store" (i.e. Gnome Software) and search for "Secrets", it should be the app with a yellow/red key icon.
+        </br>
+          If you don't find it, it may be possible that you first need to set Flatpak as a source, look for it in the settings of your Graphical Package Manager.
+          You should also find plenty tutorials on the Internet.
+        </p>
+      <h3 id="command-line">Command Line</h3>
+        <p>
+          Install it with <code class="language-plaintext highlighter-rouge">flatpak install io.github.unicornyrainbow.secrets</code>
+          <br/>
+          If you encounter problems, please refer to <a href="https://flathub.org/apps/details/io.github.unicornyrainbow.secrets">this</a> page.
+        </p>
+      <h3 id="build-it-on-your-own">Build it on your own</h3>
+        <p>Make shure, that you have the Gnome 43 Runtime and Sdk installed: <code class="language-plaintext highlighter-rouge">flatpak install org.gnome.Platform org.gnome.Sdk</code></p>
+        <p>
+          Download the the source code from the <a href="https://github.com/UnicornyRainbow/Secrets/releases/latest">latest release</a>, then unpack it and open a terminal in the folder.<br />
+          To always have the most current (maybe not stable) version, run <code class="language-plaintext highlighter-rouge">git clone https://github.com/UnicornyRainbow/Secrets</code>, then <code class="language-plaintext highlighter-rouge">cd Secrets</code>.
+        </p>
+        <p>
+          Now that you have a terminal opened in the folder with source code, make the build script executable <code class="language-plaintext highlighter-rouge">chmod +x flatpak_build.sh</code>, then run it <code class="language-plaintext highlighter-rouge">./flatpak_build.sh</code>.
+          It builds a .flatpak file you can distribute and also installs it on your system.
+        </p>
+    <h1 id="no-installation">Run Without Installation</h1>
+      <p><b>Warning!!</b> I <b>do not</b> support this method, and won't provide any support! Do this only if you know what you are doing!</p>
+      <p>I only recommend this method for development.</p>
+      <h2 id="dependencies">Dependencies</h2>
+        <h3 id="GIO">GIO</h3>
+          <p>You need to have the latest versions of Gtk and Adwaita installed (Gtk 4.9, Adw 1.2), You probably need Gnome 43 for these Dependencies</p>
+        <h3 id="Python">Python</h3>
+          <p>Any somewhat current versions of Python and PyGObject should do it. (They should be preinstalled on most systems)</p>
+      <h2 id="Download">Download</h2>
+        <p>Run <code class="language-plaintext highlighter-rouge">git clone https://github.com/UnicornyRainbow/Secrets</code></p>
+      <h2 id="run">Run</h2>
+        <p>To run it, go to the root of the project, then execute <code class="language-plaintext highlighter-rouge">python src/secrets_main.py</code></p>
   <hr/>
   <table class="footer border-gray-light mt-5 text-gray" style="width:100%;">
     <tbody><tr>
