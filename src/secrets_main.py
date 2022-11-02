@@ -79,10 +79,6 @@ class MainWindow(Adw.Window):
             Gdk.ContentProvider.new_for_value(self.password.get_text()))
 
     @Gtk.Template.Callback()
-    def use_special_toggled(self, widget: Gtk.ToggleButton):
-        self.specialCharacters.set_editable(widget.get_active())
-
-    @Gtk.Template.Callback()
     def about_clicked(self, *args):
         self.aboutDialog.show()
 
