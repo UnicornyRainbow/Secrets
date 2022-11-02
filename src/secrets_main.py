@@ -55,7 +55,6 @@ class MainWindow(Adw.Window):
     def generate_clicked(self, widget: Gtk.Button):
         chars = ""
         if self.useDigits.get_active():
-            #superchars.append(string.digits)
             chars += string.digits
         if self.useUpperCase.get_active():
             chars += string.ascii_uppercase
@@ -64,7 +63,7 @@ class MainWindow(Adw.Window):
         if self.useSpecialCharacters.get_active():
             chars += self.specialCharacters.get_text()
         self.password.set_text("".join(secrets.choice(chars) for i in range(int(self.lengthSpin.get_value()))))
-        
+
     @Gtk.Template.Callback()
     def hide_clicked(self, widget: Gtk.Entry, position: Gtk.EntryIconPosition):
         if not widget.get_visibility():
@@ -81,8 +80,7 @@ class MainWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def use_special_toggled(self, widget: Gtk.ToggleButton):
-        self.specialCharacters.get_parent().set_visible(widget.get_active())
-        self.set_default_size(-1, -1)
+        self.specialCharacters.set_editable(widget.get_active())
 
     @Gtk.Template.Callback()
     def about_clicked(self, *args):
@@ -101,7 +99,7 @@ class MyApp(Adw.Application):
         window.popover.set_child(window.popoverBox)
 
         window.specialCharacters.set_text(string.punctuation)
-        window.lengthSpin.set_value(20)
+        #window.lengthSpin.set_value(20)
         window.present()
 
 
