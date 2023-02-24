@@ -1,10 +1,21 @@
-# custom, mostly for flatpak
-.flatpak-builder
-build
-repo
-.git
+# Custom
+
+# data
+*.json
+
+# flatpak
+.flatpak-builder/
+.flatpak/
 *.flatpak
-.idea
+build
+
+# git
+.git/
+
+# vscode, pycharm and micro
+.idea/
+.vscode/
+.microrequirements.txt
 
 # Github auto generated
 

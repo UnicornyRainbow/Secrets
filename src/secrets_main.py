@@ -1,5 +1,7 @@
+#!/usr/bin/env python3
+
 # Secrets, easily generate passwords.
-#     Copyright (C) 2022  UnicornyRainbow
+#     Copyright (C) 2023  UnicornyRainbow
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
