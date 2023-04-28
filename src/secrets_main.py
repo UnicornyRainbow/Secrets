@@ -40,12 +40,12 @@ class MainWindow(Adw.Window):
     mainBox: Gtk.Box = Gtk.Template.Child()
     popover: Gtk.Popover = Gtk.Template.Child()
     popoverBox: Gtk.Box = Gtk.Template.Child()
-    password: Gtk.Entry = Gtk.Template.Child()
-    specialCharacters: Gtk.Entry = Gtk.Template.Child()
-    useDigits: Gtk.CheckButton = Gtk.Template.Child()
-    useUpperCase: Gtk.CheckButton = Gtk.Template.Child()
-    useLowerCase: Gtk.CheckButton = Gtk.Template.Child()
-    useSpecialCharacters: Gtk.CheckButton = Gtk.Template.Child()
+    password: Adw.PasswordEntryRow = Gtk.Template.Child()
+    specialCharacters: Adw.EntryRow = Gtk.Template.Child()
+    useDigits: Gtk.Switch = Gtk.Template.Child()
+    useUpperCase: Gtk.Switch = Gtk.Template.Child()
+    useLowerCase: Gtk.Switch = Gtk.Template.Child()
+    useSpecialCharacters: Gtk.Switch = Gtk.Template.Child()
     lengthSpin: Gtk.SpinButton = Gtk.Template.Child()
     aboutDialog: Adw.AboutWindow = Gtk.Template.Child()
 
@@ -67,22 +67,14 @@ class MainWindow(Adw.Window):
         self.password.set_text("".join(secrets.choice(chars) for i in range(int(self.lengthSpin.get_value()))))
 
     @Gtk.Template.Callback()
-    def hide_clicked(self, widget: Gtk.Entry, position: Gtk.EntryIconPosition):
-        if not widget.get_visibility():
-            widget.set_visibility(True)
-            widget.set_icon_from_icon_name(Gtk.Orientation.VERTICAL, "view-conceal-symbolic")
-        else:
-            widget.set_visibility(False)
-            widget.set_icon_from_icon_name(Gtk.Orientation.VERTICAL, "view-reveal-symbolic")
-
-    @Gtk.Template.Callback()
     def copy_password_clicked(self, widget: Gtk.Button):
         Gdk.Display.get_clipboard(Gdk.Display.get_default()).set_content(
-            Gdk.ContentProvider.new_for_value(self.password.get_text()))
+            Gdk.ContentProvider.new_for_value(self.password.get_text())
+        )
 
     @Gtk.Template.Callback()
     def about_clicked(self, *args):
-        self.aboutDialog.show()
+        self.aboutDialog.set_visible(True)
 
 
 class MyApp(Adw.Application):
@@ -97,7 +89,6 @@ class MyApp(Adw.Application):
         window.popover.set_child(window.popoverBox)
 
         window.specialCharacters.set_text(string.punctuation)
-        #window.lengthSpin.set_value(20)
         window.present()
 
 
