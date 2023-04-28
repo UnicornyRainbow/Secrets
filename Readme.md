@@ -1,6 +1,8 @@
-# Secrets
+# Key Cutter
 
 [<img alt="alt_text" height="100px" src="https://www.flathub.org/assets/badges/flathub-badge-en.png" />](https://flathub.org/apps/details/io.github.unicornyrainbow.secrets)
+
+> **Hint:** You will currently find a mixed naming scheme between `Key Cutter` and `Secrets`, this is because I am currently renaming my app for more compatibility with [another project](https://github.com/UnicornyRainbow/Secrets/issues/1).
 
 A small app written in Python, Gtk4 and Libadwaita that can generate passwords.
 Users are able to choose what characters they want to use.

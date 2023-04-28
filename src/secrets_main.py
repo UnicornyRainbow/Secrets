@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Secrets, easily generate passwords.
+# Key Cutter, easily generate passwords.
 #     Copyright (C) 2023  UnicornyRainbow
 #
 #     This program is free software: you can redistribute it and/or modify
@@ -89,6 +89,9 @@ class MyApp(Adw.Application):
         window.popover.set_child(window.popoverBox)
 
         window.specialCharacters.set_text(string.punctuation)
+
+        window.aboutDialog.add_credit_section(name="App Name", people=["Brage Fuglseth"])
+
         window.present()
 
 
