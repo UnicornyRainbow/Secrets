@@ -1,76 +1,104 @@
 <!DOCTYPE html>
-<html lang="en-US">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>UnicornyRainbow - Secrets</title>
-  <link rel="canonical" href="https://unicornyrainbow.github.io/Secrets" />
-  <meta property="og:url" content="https://unicornyrainbow.github.io/Secrets" />
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Key Cutter" />
-  <meta property="og:site_name" content="A password generator">
-  <meta property="og:description" content="A small, basic password generator" />
-  <meta property="og:image" content="https://unicornyrainbow.github.io/Secrets/assets/secrets-logo.png" />
-  <meta name="twitter:card" content="summary">
-  <link rel="shortcut icon" type="image/png" href="/Secrets/assets/secrets-logo.png?">
-  <link rel="stylesheet" href="/UnicornyRainbow/assets/css/style.css?v=dbb2dc5cc0b05a8b5e2579d51fdcb1bb59eca7fd">
-  <link rel="stylesheet" type="text/css" href="/UnicornyRainbow/assets/my-style.css">
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebSite","description":"Secrets","headline":"Secrets","name":"Secrets","url":"https://unicornyrainbow.github.io/Secrets/"}</script>
-</head>
-<body>
-<nav>
-  <ul>
-    <li>
-        <a href="/UnicornyRainbow"><img class="profile-picture" src="/UnicornyRainbow/assets/me.png"/></a>
-    </li>
-    <li>
-        <a class="navbar-link" href="/Codey">Codey</a>
-    </li>
-    <li>
-        <a class="navbar-link" href="/Organizer">Organizer</a>
-    </li>
-    <li class="active">
-        <a class="navbar-link" href="/Secrets">Key Cutter</a>
-    </li>
-    <li class="sub-menu">
-        <a class="navbar-link" href="/Secrets/install">Installation</a>
-    </li>
-  </ul>
-</nav>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>UnicornyRainbow - KeyCutter</title>
+        <link rel="canonical" href="https:&#x2F;&#x2F;unicornyrainbow.org&#x2F;Coding&#x2F;KeyCutter&#x2F;" />
+        <meta property="og:url" content="https:&#x2F;&#x2F;unicornyrainbow.org&#x2F;Coding&#x2F;KeyCutter&#x2F;" />
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="UnicornyRainbow - KeyCutter" />
+        <meta property="og:site_name" content="UnicornyRainbow">
+        <meta property="og:description" content="KeyCutter - Easily generate passwords" />
+        <meta property="og:image" content="https://unicornyrainbow.org/static/me.png" />
+        <meta name="twitter:card" content="summary">
+        <script type="application/ld+json">
+            {"@context":"https://schema.org","@type":"WebSite","description":"KeyCutter - Easily generate passwords","headline":"UnicornyRainbow","name":"UnicornyRainbow - KeyCutter","url":"https:&#x2F;&#x2F;unicornyrainbow.org&#x2F;Coding&#x2F;KeyCutter&#x2F;"}
+        </script>
+        <link rel="shortcut icon" type="image/png" href="https://unicornyrainbow.org/static/me.png?">
+        <link rel="stylesheet" type="text/css" href="https://unicornyrainbow.org/static/style.css">
+        <link rel="stylesheet" type="text/css" href="https://unicornyrainbow.org/static/header-style.css">
+    </head>
+    <body>
+        <header>
+            <div class="header-bar">
+                <a href="https://unicornyrainbow.org/"><img class="logo" src="https://unicornyrainbow.org/static/me.png" alt="Unicorn's profile picture" title="Home"></a>
+                <input type="checkbox" class="nav-toggle" id="nav-toggle">
+                <h1>KeyCutter</h1>
+                <nav>
+                    <ul>
+                        <li>
+                            <a class="current" href="https://unicornyrainbow.org/Coding">Coding</a>
+                        </li>
+                        <li>
+                            <a  href="https://unicornyrainbow.org/Photography">Photography</a>
+                        </li>
+                        <li>
+                            <a  href="https://unicornyrainbow.org/Contact">Contact</a>
+                        </li>
+                    </ul>
+                </nav>
+                <label for="nav-toggle" class="nav-toggle-label">
+                    <span></span>
+                </label>
+            </div>
+        </header>
+        <main>
+          <h1>This site is only for compatibility / legacy reasons and will be deleted eventually! The new site is <a href="https://unicornyrainbow.org/KeyCutter">https://unicornyrainbow.org/KeyCutter</a>! All "internal" links on this site will redirect you to the new site at <a href="https://unicornyrainbow.org/">https://unicornyrainbow.org/</a></h1>
+         <div class="grid auto-fit">
+<img src="https://unicornyrainbow.org/static/coding/key_cutter/app_dark.png" style="width: 100%;" alt="The application window using GTK and Libadwaita UI components ind dark mode. The window is small and vertical and shows the default view of the app with settings that can be set, a password output field and a generate button.">
 <div>
-  <h1 id="key-cutter">Key Cutter</h1>
-  <hr/>
-  <p>
-    <img src="/Secrets/assets/secrets.png" alt="secrets.png" />
-    <img src="/Secrets/assets/secrets_dark.png" alt="secrets_dark.png" />
-  </p>
-  <p>
-    <b>Disclaimer:</b><br>
-    You might be wondering why this app is now called Key Cutter, this is to prevent confusion with another project.
-    For more info on this topic, see <a href="https://github.com/UnicornyRainbow/Secrets/issues/1" target="_blank">here</a>.
-  </p>
-  <p>
-    A small app written in Python, Gtk4 and Libadwaita that can generate passwords.
-    It uses <a href="https://docs.python.org/3/library/secrets.html" target="_blank">Pythons Secrets module</a> to generate the passwords, so they should be decetly secure.
-    Users are able to choose what characters they want to use.
-    The app is <strong>NOT</strong> intended to replace your password manager but as a backup solution if the integrated password generator in, for example, Firefox doesn't recognize the password field or you need to generate a password for an app where you can't use your password manager.
-  </p>
-  <p>Get the source code:</p>
-  <p>
-    <a class="button" href="https://github.com/UnicornyRainbow/Secrets" target="_blank">GitHub</a>
-    <a class="button" href="https://gitlab.com/UnicornyRainbow/Secrets" target="_blank">GitLab</a>
-  </p>
-  <hr/>
-  <a href="https://www.flaticon.com/free-icons/smart-key" title="smart key icons" target="_blank">Smart key icons created by Freepik - Flaticon</a>
-  <hr/>
-  <table class="footer border-gray-light mt-5 text-gray" style="width:100%;">
-    <tbody><tr>
-      <td style="text-align: left;">&copy; 2023 UnicornyRainbow</td>
-      <td style="text-align: right;">This site is open source. <a href="https://github.com/UnicornyRainbow/Secrets/edit/docs/index.html" target="_blank">Improve this page</a>.</td>
-    </tr></tbody>
-  </table>
+<p>A small app written in Python, Gtk4 and Libadwaita that can generate passwords.<br />
+It uses <a class="external" href="https://docs.python.org/3/library/secrets.html" target="_blank">Pythons Secrets module</a> to generate the passwords, so they should be decently secure.<br />
+Users are able to choose what characters they want to use.<br />
+The app is NOT intended to replace your password manager but as a backup solution if the integrated password generator in, for example, Firefox doesn't recognize the password field or you need to generate a password for an app where you can't use your password manager.</p>
+<p>Get the source code on <a class="external" href="https://github.com/UnicornyRainbow/KeyCutter" target="_blank">GitHub</a>.</p>
+<hr />
+<p><a class="external" href="https://www.flaticon.com/free-icons/smart-key" target="_blank">Smart key icons created by Freepik - Flaticon</a></p>
 </div>
+</div>
+<h2 id="installation">Installation</h2>
+<a class="no-hover-color" href="https://flathub.org/apps/io.github.unicornyrainbow.secrets" target="_blank">
+    <img width='240' alt='Download on Flathub' src='https://flathub.org/api/badge?locale=en'/>
+</a>
+<details>
+    <summary>Dependencies</summary>
+<h3 id="flatpak">Flatpak</h3>
+<p>The package manager / packaging format used:</p>
+<ul>
+<li>Fedora: <code>sudo dnf install flatpak</code></li>
+<li>Ubuntu: <code>sudo apt install flatpak</code></li>
+<li>Arch: <code>sudo pacman -S flatpak</code></li>
+</ul>
+<p>Then add Flathub: <code>flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo</code></p>
+<p>Or follow the <a class="external" href="https://www.flatpak.org/setup/" target="_blank">official instructions</a></p>
+</details>
+<details>
+    <summary>Installation</summary>
+<h3 id="graphical">Graphical</h3>
+<p>After you have added Flathub, you should be able to go to your graphical &quot;App Store&quot; (i.e. Gnome Software) and search for &quot;Key Cutter&quot;, it should be the app with a yellow/red key icon.</p>
+<p>If you don't find it, it may be possible that you first need to set Flatpak as a source, look for it in the settings of your Graphical Package Manager.<br />
+You should also find plenty tutorials on the Internet.</p>
+<h3 id="command-line">Command Line</h3>
+<p>Install it with <code>flatpak install io.github.unicornyrainbow.secrets</code></p>
+<p>If you encounter problems, please refer to <a class="external" href="https://flathub.org/apps/details/io.github.unicornyrainbow.secrets" target="_blank">the official flathub</a> page.</p>
+</details> 
+        </main>
+        <footer>
+            <hr/>
+            <div class="grid auto-fill">
+                <a href="https://unicornyrainbow.org/Privacy">Privacy / Datenschutzerklärung </a>
+                <a href="https://unicornyrainbow.org/Licenses">Technology / Licenses</a>
+                <a href="https://unicornyrainbow.org/Legal">Legal Info / Impressum</a>
+            </div>
+            <p>
+                My profile picture is made with the <a class="external" href="https://picrew.me/image_maker/626197/" target="_blank">character maker</a> from hunbloom on <a class="external" href="https://picrew.me/search/creator?crid=953491" target="_blank">Picrew</a>. Check out their amazing art on <a class="external" href="https://www.instagram.com/hunbloom/" target="_blank">Instagram</a> and <a class="external" href="https://twitter.com/hunblooms" target="_blank">Twitter</a>.
+            </p>
+            <p>
+                I try to make this website as accessible as possible, if you have some improvement suggestions, please <a class="external" href="https://github.com/UnicornyRainbow/Website/issues/new" target="_blank">open an issue on GitHub</a> or <a href="/Contact">contact me directly</a>.
+            </p>
+        </footer>
 </body>
 </html>
