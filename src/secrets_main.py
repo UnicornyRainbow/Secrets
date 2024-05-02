@@ -20,6 +20,9 @@ import gi
 import sys
 import secrets
 import string
+from dataclasses import dataclass, asdict
+import os
+import json
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Gdk', '4.0')
@@ -32,6 +35,25 @@ if __debug__:
 else:
     uipath = "/app/bin/secrets.ui"
 
+
+if os.environ.get("XDG_CACHE_HOME"):
+    xdg_config_home = os.environ.get("XDG_CACHE_HOME")
+else:
+    if not os.path.isdir("~/.cache/keycutter"):
+        os.makedirs("~/.cache/keycutter")
+    xdg_config_home = "~/.cache/keycutter"
+
+@dataclass
+class State:
+    width: int
+    height: int
+    length: int
+    useDigits: bool
+    useUpperCase: bool
+    useLowerCase: bool
+    useSpecialCharacters: bool
+    specialCharacters: str
+    specialCharactersExpander: bool
 
 @Gtk.Template(filename=uipath)
 class MainWindow(Adw.Window):
@@ -46,12 +68,28 @@ class MainWindow(Adw.Window):
     useUpperCase: Gtk.Switch = Gtk.Template.Child()
     useLowerCase: Gtk.Switch = Gtk.Template.Child()
     useSpecialCharacters: Gtk.Switch = Gtk.Template.Child()
+    specialCharactersExpander: Adw.ExpanderRow = Gtk.Template.Child()
     lengthSpin: Gtk.SpinButton = Gtk.Template.Child()
+    lengthSpinAdjustment: Gtk.Adjustment = Gtk.Template.Child()
     aboutDialog: Adw.AboutWindow = Gtk.Template.Child()
 
     @Gtk.Template.Callback()
     def on_destroy(self, *args):
-        Gtk.main_quit()
+        with open(xdg_config_home + '/config.json', 'w') as file:
+            width, height = self.get_default_size()
+            state = State(
+                width=width,
+                height=height,
+                length=self.lengthSpinAdjustment.get_value(),
+                useDigits=self.useDigits.get_active(),
+                useUpperCase=self.useUpperCase.get_active(),
+                useLowerCase=self.useLowerCase.get_active(),
+                useSpecialCharacters=self.useSpecialCharacters.get_active(),
+                specialCharacters=self.specialCharacters.get_text(),
+                specialCharactersExpander=self.specialCharactersExpander.get_expanded()
+            )
+            jsonstate=json.dumps(asdict(state))
+            file.write(jsonstate)
 
     @Gtk.Template.Callback()
     def generate_clicked(self, widget: Gtk.Button):
@@ -73,6 +111,34 @@ class MainWindow(Adw.Window):
         )
 
     @Gtk.Template.Callback()
+    def reset_clicked(self, widget: Gtk.Button):
+
+        state = State(
+            width=300,
+            height=445,
+            length=20,
+            useDigits=True,
+            useUpperCase=True,
+            useLowerCase=True,
+            useSpecialCharacters=True,
+            specialCharacters=string.punctuation,
+            specialCharactersExpander=False
+        )
+
+        self.specialCharacters.set_text(state.specialCharacters)
+        self.useSpecialCharacters.set_active(state.useSpecialCharacters)
+        self.useLowerCase.set_active(state.useLowerCase)
+        self.useUpperCase.set_active(state.useUpperCase)
+        self.useDigits.set_active(state.useDigits)
+        self.lengthSpinAdjustment.set_value(state.length)
+        self.set_default_size(state.width, state.height)
+        self.specialCharactersExpander.set_expanded(state.specialCharactersExpander)
+
+        with open(xdg_config_home + '/config.json', 'w') as file:
+            jsonstate=json.dumps(asdict(state))
+            file.write(jsonstate)
+
+    @Gtk.Template.Callback()
     def about_clicked(self, *args):
         self.aboutDialog.set_visible(True)
 
@@ -90,10 +156,25 @@ class MyApp(Adw.Application):
 
         window.specialCharacters.set_text(string.punctuation)
 
+        if os.path.exists(xdg_config_home + '/config.json'):
+            try:
+                with open(xdg_config_home + '/config.json', 'r') as file:
+                    state = State(**json.load(file))
+
+                    window.specialCharacters.set_text(state.specialCharacters)
+                    window.useSpecialCharacters.set_active(state.useSpecialCharacters)
+                    window.useLowerCase.set_active(state.useLowerCase)
+                    window.useUpperCase.set_active(state.useUpperCase)
+                    window.useDigits.set_active(state.useDigits)
+                    window.lengthSpinAdjustment.set_value(state.length)
+                    window.set_default_size(state.width, state.height)
+                    window.specialCharactersExpander.set_expanded(state.specialCharactersExpander)
+            except:
+                pass
+
         window.aboutDialog.add_credit_section(name="App Name", people=["Brage Fuglseth"])
 
         window.present()
-
 
 app2 = MyApp(application_id='io.github.unicornyrainbow.secrets', flags=Gio.ApplicationFlags.FLAGS_NONE)
 app2.run(sys.argv)
