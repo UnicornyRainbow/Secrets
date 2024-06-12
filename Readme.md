@@ -8,11 +8,11 @@ A small app written in Python, Gtk4 and Libadwaita that can generate passwords.
 Users are able to choose what characters they want to use.
 The app is NOT intended to replace your passwordmanager but as a backup solution if the integrated passwordgenerator in IE Firefox doesn't recognise the password field or you need to generate a password for an app where you can't use your passwordmanager.
 
-![Key-Cutter-screenshot-light](https://unicornyrainbow.github.io/Secrets/assets/secrets.png)
-![Key-Cutter-screenshot-dark](https://unicornyrainbow.github.io/Secrets/assets/secrets_dark.png)
+![Key-Cutter-screenshot-light](https://unicornyrainbow.org/static/coding/key_cutter/app_light.png)
+![Key-Cutter-screenshot-dark](https://unicornyrainbow.org/static/coding/key_cutter/app_dark.png)
 
-Visit the [website](https://unicornyrainbow.github.io/Secrets/) to find out more
+Visit the [website](https://unicornyrainbow.org/Coding/KeyCutter) to find out more
 
 ## Installation
 
-Follow these [instructions](https://unicornyrainbow.github.io/Secrets/install)
+Follow these [instructions](https://unicornyrainbow.org/Coding/KeyCutter#installation)
