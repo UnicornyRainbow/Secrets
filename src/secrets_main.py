@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 # Key Cutter, easily generate passwords.
 #     Copyright (C) 2023  UnicornyRainbow
@@ -23,25 +24,39 @@ import string
 from dataclasses import dataclass, asdict
 import os
 import json
+import gettext
+import locale
 
-gi.require_version('Gtk', '4.0')
-gi.require_version('Gdk', '4.0')
-gi.require_version('Adw', '1')
+gi.require_version("Gtk", "4.0")
+gi.require_version("Gdk", "4.0")
+gi.require_version("Adw", "1")
 
 from gi.repository import Gtk, Adw, Gdk, Gio
 
 if __debug__:
-    uipath = "src/res/secrets.ui"
+    UI_PATH = "src/res/secrets.ui"
+    LOCALE_PATH = "src/res/po"
 else:
-    uipath = "/app/bin/secrets.ui"
+    UI_PATH = "/app/bin/secrets.ui"
+    LOCALE_PATH = "/app/bin/po"
 
 
 if os.environ.get("XDG_CACHE_HOME"):
-    xdg_config_home = os.environ.get("XDG_CACHE_HOME")
+    XDG_CONFIG_HOME = os.environ.get("XDG_CACHE_HOME")
 else:
     if not os.path.isdir("~/.cache/keycutter"):
         os.makedirs("~/.cache/keycutter")
-    xdg_config_home = "~/.cache/keycutter"
+    XDG_CONFIG_HOME = "~/.cache/keycutter"
+
+APP = "io.github.unicornyrainbow.secrets"
+
+locale.setlocale(locale.LC_ALL, locale.getlocale())
+if sys.platform != "darwin":
+    locale.bindtextdomain(APP, LOCALE_PATH)
+gettext.bindtextdomain(APP, LOCALE_PATH)
+gettext.textdomain(APP)
+_ = gettext.gettext
+print(_("Generate"))
 
 @dataclass
 class State:
@@ -55,7 +70,7 @@ class State:
     specialCharacters: str
     specialCharactersExpander: bool
 
-@Gtk.Template(filename=uipath)
+@Gtk.Template(filename=UI_PATH)
 class MainWindow(Adw.Window):
     __gtype_name__ = "MainWindow"
 
@@ -75,7 +90,7 @@ class MainWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def on_destroy(self, *args):
-        with open(xdg_config_home + '/config.json', 'w') as file:
+        with open(XDG_CONFIG_HOME + "/config.json", "w") as file:
             width, height = self.get_default_size()
             state = State(
                 width=width,
@@ -134,7 +149,7 @@ class MainWindow(Adw.Window):
         self.set_default_size(state.width, state.height)
         self.specialCharactersExpander.set_expanded(state.specialCharactersExpander)
 
-        with open(xdg_config_home + '/config.json', 'w') as file:
+        with open(XDG_CONFIG_HOME + "/config.json", "w") as file:
             jsonstate=json.dumps(asdict(state))
             file.write(jsonstate)
 
@@ -146,7 +161,7 @@ class MainWindow(Adw.Window):
 class MyApp(Adw.Application):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.connect('activate', self.on_activate)
+        self.connect("activate", self.on_activate)
 
     def on_activate(self, app):
         window = MainWindow(application=self)
@@ -156,9 +171,9 @@ class MyApp(Adw.Application):
 
         window.specialCharacters.set_text(string.punctuation)
 
-        if os.path.exists(xdg_config_home + '/config.json'):
+        if os.path.exists(XDG_CONFIG_HOME + "/config.json"):
             try:
-                with open(xdg_config_home + '/config.json', 'r') as file:
+                with open(XDG_CONFIG_HOME + "/config.json", "r") as file:
                     state = State(**json.load(file))
 
                     window.specialCharacters.set_text(state.specialCharacters)
@@ -176,5 +191,5 @@ class MyApp(Adw.Application):
 
         window.present()
 
-app2 = MyApp(application_id='io.github.unicornyrainbow.secrets', flags=Gio.ApplicationFlags.FLAGS_NONE)
+app2 = MyApp(application_id=APP, flags=Gio.ApplicationFlags.FLAGS_NONE)
 app2.run(sys.argv)
