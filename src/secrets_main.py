@@ -187,7 +187,7 @@ class MyApp(Adw.Application):
             except:
                 pass
 
-        window.aboutDialog.add_credit_section(name="App Name", people=["Brage Fuglseth"])
+        window.aboutDialog.add_credit_section(name=_("App Name"), people=["Brage Fuglseth"])
 
         window.present()
 

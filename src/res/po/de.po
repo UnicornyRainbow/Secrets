@@ -17,6 +17,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: src/res/secrets.ui:86
+msgid "About"
+msgstr "Über"
+
+#: src/res/secrets.ui:150
+msgid "Digits"
+msgstr "Zahlen"
+
+#. Details
+#: src/res/secrets.ui:197
+msgid ""
+"Easily generate passwords with different conditions to fit the requirements "
+"of various websites and apps."
+msgstr ""
+"Generiere einfach Passwörter, die an die Anforderungen von verschiedenen "
+"Apps und Webseiten angepasst sind."
+
 #: src/res/secrets.ui:37
 msgid "Generate"
 msgstr "Generieren"
+
+#: src/res/secrets.ui:116
+msgid "Length"
+msgstr "Länge"
+
+#: src/res/secrets.ui:139
+msgid "Lowercase"
+msgstr "Kleinbuchstaben"
+
+#: src/res/secrets.ui:95
+msgid "Password"
+msgstr "Passwort"
+
+#: src/res/secrets.ui:79
+msgid "Reset window"
+msgstr "Fenster zurücksetzen"
+
+#: src/res/secrets.ui:161 src/res/secrets.ui:170
+msgid "Special Characters"
+msgstr "Sonderzeichen"
+
+#: src/res/secrets.ui:128
+msgid "Uppercase"
+msgstr "Großbuchstaben"
+
+#: src/secrets_main.py
+msgid "App Name"
+msgstr "App Name"
