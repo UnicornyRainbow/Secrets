@@ -34,8 +34,8 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, Gdk, Gio
 
 if __debug__:
-    UI_PATH = "src/res/secrets.ui"
-    LOCALE_PATH = "src/res/mo"
+    UI_PATH = "src/ui/secrets.ui"
+    LOCALE_PATH = "src/mo"
 else:
     UI_PATH = "/app/bin/secrets.ui"
     LOCALE_PATH = "/app/bin/mo"
@@ -56,7 +56,6 @@ if sys.platform != "darwin":
 gettext.bindtextdomain(APP, LOCALE_PATH)
 gettext.textdomain(APP)
 _ = gettext.gettext
-print(_("Generate"))
 
 @dataclass
 class State:

@@ -16,3 +16,8 @@ Visit the [website](https://unicornyrainbow.org/Coding/KeyCutter) to find out mo
 ## Installation
 
 Follow these [instructions](https://unicornyrainbow.org/Coding/KeyCutter#installation)
+
+## Contribute Translations
+
+You can copy the example for the german language (`src/po/de.po`) a file with your language code (ie `src/po/hu.po`) and change the translations and replace all occurences of `de` with your language code.
+Then add your language code to `src/po/LINGUAS`, make sure to keep a new line add the end of the file!
