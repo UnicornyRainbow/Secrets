@@ -35,10 +35,10 @@ from gi.repository import Gtk, Adw, Gdk, Gio
 
 if __debug__:
     UI_PATH = "src/res/secrets.ui"
-    LOCALE_PATH = "src/res/po"
+    LOCALE_PATH = "src/res/mo"
 else:
     UI_PATH = "/app/bin/secrets.ui"
-    LOCALE_PATH = "/app/bin/po"
+    LOCALE_PATH = "/app/bin/mo"
 
 
 if os.environ.get("XDG_CACHE_HOME"):
