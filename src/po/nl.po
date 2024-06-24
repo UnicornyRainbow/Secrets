@@ -28,11 +28,9 @@ msgstr "Getallen"
 
 #. Details
 #: src/res/secrets.ui:197
-msgid ""
-"Easily generate passwords with different conditions to fit the requirements "
+msgid "Easily generate passwords with different conditions to fit the requirements "
 "of various websites and apps."
-msgstr ""
-"Genereer op eenvoudige wijze wachtwoorden met verschillende eisen, "
+msgstr "Genereer op eenvoudige wijze wachtwoorden met verschillende eisen, "
 "afhankelijk van de gebruikte websites en apps."
 
 #: src/res/secrets.ui:37
