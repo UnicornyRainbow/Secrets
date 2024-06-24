@@ -1,0 +1,68 @@
+# KeyCutter
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# UnicornyRainbow unicornyrainbow@posteo.de, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: io.github.unicornyrainbow.secrets\n"
+"Report-Msgid-Bugs-To: unicornyrainbow@posteo.de\n"
+"POT-Creation-Date: 2024-06-21 22:50+0200\n"
+"PO-Revision-Date: 2024-06-24 22:00+0200\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: German unicornyrainbow@posteo.de\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: src/res/secrets.ui:86
+msgid "About"
+msgstr "Over"
+
+#: src/res/secrets.ui:150
+msgid "Digits"
+msgstr "Getallen"
+
+#. Details
+#: src/res/secrets.ui:197
+msgid ""
+"Easily generate passwords with different conditions to fit the requirements "
+"of various websites and apps."
+msgstr ""
+"Genereer op eenvoudige wijze wachtwoorden met verschillende eisen, "
+"afhankelijk van de gebruikte websites en apps."
+
+#: src/res/secrets.ui:37
+msgid "Generate"
+msgstr "Genereren"
+
+#: src/res/secrets.ui:116
+msgid "Length"
+msgstr "Lengte"
+
+#: src/res/secrets.ui:139
+msgid "Lowercase"
+msgstr "Kleine letters"
+
+#: src/res/secrets.ui:95
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: src/res/secrets.ui:79
+msgid "Reset window"
+msgstr "Standaardwaarden"
+
+#: src/res/secrets.ui:161 src/res/secrets.ui:170
+msgid "Special Characters"
+msgstr "Speciale tekens"
+
+#: src/res/secrets.ui:128
+msgid "Uppercase"
+msgstr "Hoofdletters"
+
+#: src/secrets_main.py
+msgid "App Name"
+msgstr "Naam van toepassing/app"
