@@ -38,7 +38,7 @@ if __debug__:
     LOCALE_PATH = "src/mo"
 else:
     UI_PATH = "/app/bin/secrets.ui"
-    LOCALE_PATH = "/app/bin/mo"
+    LOCALE_PATH = "/app/share/locale"
 
 
 if os.environ.get("XDG_CACHE_HOME"):
