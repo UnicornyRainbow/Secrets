@@ -85,7 +85,7 @@ class MainWindow(Adw.Window):
     specialCharactersExpander: Adw.ExpanderRow = Gtk.Template.Child()
     lengthSpin: Gtk.SpinButton = Gtk.Template.Child()
     lengthSpinAdjustment: Gtk.Adjustment = Gtk.Template.Child()
-    aboutDialog: Adw.AboutWindow = Gtk.Template.Child()
+    aboutDialog: Adw.AboutDialog = Gtk.Template.Child()
 
     @Gtk.Template.Callback()
     def on_destroy(self, *args):
@@ -154,7 +154,7 @@ class MainWindow(Adw.Window):
 
     @Gtk.Template.Callback()
     def about_clicked(self, *args):
-        self.aboutDialog.set_visible(True)
+        self.aboutDialog.present(self)
 
 
 class MyApp(Adw.Application):
