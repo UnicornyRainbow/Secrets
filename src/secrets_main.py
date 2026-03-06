@@ -114,27 +114,36 @@ class MainWindow(Adw.Window):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.dictionary = self.read_dictionary()
+        try:
+            self.dictionary = self.read_dictionary()
+        except:
+            print("Could not read any dictionary", file=sys.stderr)
 
     def read_dictionary(self):
         lang = locale.getlocale()[0]
         dict_dir = "/usr/share/hunspell/"
         dict_path = dict_dir
         words = []
-        if os.path.exists(dict_dir + lang + ".dic"):
-            dict_path += lang + ".dic"
-        elif os.path.exists(dict_dir + lang.split('_')[0] + ".dic"):
-            dict_path += lang.split('_')[0] + ".dic"
-        elif next(filter(lambda e: e.endswith(".dic") and e.startswith(lang.split('_')[0]),
-                         os.listdir(dict_dir)),
-                  None):
-            dict_path += next(filter(lambda e: e.endswith(".dic") and e.startswith(lang.split('_')[0]),
-                                     os.listdir(dict_dir)))
-        elif next(filter(lambda e: e.endswith(".dic") and e.startswith("en"),
-                         os.listdir(dict_dir)),
-                  None):
+        try: # this currently fails for german dictionarys, will need to be investigated and improved in the future...
+            if os.path.exists(dict_dir + lang + ".dic"):
+                dict_path += lang + ".dic"
+            elif os.path.exists(dict_dir + lang.split('_')[0] + ".dic"):
+                dict_path += lang.split('_')[0] + ".dic"
+            elif next(filter(lambda e: e.endswith(".dic") and e.startswith(lang.split('_')[0]),
+                            os.listdir(dict_dir)),
+                    None):
+                dict_path += next(filter(lambda e: e.endswith(".dic") and e.startswith(lang.split('_')[0]),
+                                        os.listdir(dict_dir)))
+            elif next(filter(lambda e: e.endswith(".dic") and e.startswith("en"),
+                            os.listdir(dict_dir)),
+                    None):
+                dict_path += next(filter(lambda e: e.endswith(".dic") and e.startswith("en"),
+                                        os.listdir(dict_dir)))
+        except:
+            print("Could not dictionary for " + lang, file=sys.stderr)
             dict_path += next(filter(lambda e: e.endswith(".dic") and e.startswith("en"),
-                                     os.listdir(dict_dir)))
+                              os.listdir(dict_dir)))
+
         with open(dict_path, "r") as dict:
             next(dict)
             for line in dict:
