@@ -114,13 +114,22 @@ class MainWindow(Adw.Window):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.dictionary = self.read_dictionary()
+
+    def get_hunspell_encoding(_, aff_path):
         try:
-            self.dictionary = self.read_dictionary()
+            with open(aff_path, "r", encoding="ascii", errors="ignore") as aff:
+                for line in aff:
+                    if line.startswith("SET "):
+                        return line.split(" ")[1].strip()
+            print("Could not find encoding in " + aff_path, file=sys.stderr)
         except:
-            print("Could not read any dictionary", file=sys.stderr)
+            print("Could not read " + aff_path, file=sys.stderr)
+        return "utf-8"
 
     def read_dictionary(self):
         lang = locale.getlocale()[0]
+        lang = "en_AG"
         dict_dir = "/usr/share/hunspell/"
         dict_path = dict_dir
         words = []
@@ -139,9 +148,11 @@ class MainWindow(Adw.Window):
                 None):
             dict_path += next(filter(lambda e: e.endswith(".dic") and e.startswith("en"),
                                     os.listdir(dict_dir)))
+        
+        dict_encoding = self.get_hunspell_encoding(dict_path.replace(".dic", ".aff"))
 
-        try: # this currently fails for german dictionarys, will need to be investigated and improved in the future...
-            with open(dict_path, "r") as dict:
+        try:
+            with open(dict_path, "r", encoding="dict_encoding") as dict:
                 next(dict)
                 for line in dict:
                     word = line.split('/')[0].strip().lower()
@@ -149,14 +160,6 @@ class MainWindow(Adw.Window):
                         words.append(word)
         except:
             print("Could not read dictionary for " + lang, file=sys.stderr)
-            dict_path = dict_dir + next(filter(lambda e: e.endswith(".dic") and e.startswith("en"),
-                                               os.listdir(dict_dir)))
-            with open(dict_path, "r") as dict:
-                next(dict)
-                for line in dict:
-                    word = line.split('/')[0].strip().lower()
-                    if 8>= len(word) >= 4 and word.isalpha():
-                        words.append(word)
 
         return words
 
