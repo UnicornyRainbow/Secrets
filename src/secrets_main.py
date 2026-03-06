@@ -129,7 +129,6 @@ class MainWindow(Adw.Window):
 
     def read_dictionary(self):
         lang = locale.getlocale()[0]
-        lang = "en_AG"
         dict_dir = "/usr/share/hunspell/"
         dict_path = dict_dir
         words = []
@@ -148,7 +147,7 @@ class MainWindow(Adw.Window):
                 None):
             dict_path += next(filter(lambda e: e.endswith(".dic") and e.startswith("en"),
                                     os.listdir(dict_dir)))
-        
+
         dict_encoding = self.get_hunspell_encoding(dict_path.replace(".dic", ".aff"))
 
         try:
