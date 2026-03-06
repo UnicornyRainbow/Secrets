@@ -124,32 +124,40 @@ class MainWindow(Adw.Window):
         dict_dir = "/usr/share/hunspell/"
         dict_path = dict_dir
         words = []
-        try: # this currently fails for german dictionarys, will need to be investigated and improved in the future...
-            if os.path.exists(dict_dir + lang + ".dic"):
-                dict_path += lang + ".dic"
-            elif os.path.exists(dict_dir + lang.split('_')[0] + ".dic"):
-                dict_path += lang.split('_')[0] + ".dic"
-            elif next(filter(lambda e: e.endswith(".dic") and e.startswith(lang.split('_')[0]),
-                            os.listdir(dict_dir)),
-                    None):
-                dict_path += next(filter(lambda e: e.endswith(".dic") and e.startswith(lang.split('_')[0]),
-                                        os.listdir(dict_dir)))
-            elif next(filter(lambda e: e.endswith(".dic") and e.startswith("en"),
-                            os.listdir(dict_dir)),
-                    None):
-                dict_path += next(filter(lambda e: e.endswith(".dic") and e.startswith("en"),
-                                        os.listdir(dict_dir)))
-        except:
-            print("Could not dictionary for " + lang, file=sys.stderr)
-            dict_path += next(filter(lambda e: e.endswith(".dic") and e.startswith("en"),
-                              os.listdir(dict_dir)))
 
-        with open(dict_path, "r") as dict:
-            next(dict)
-            for line in dict:
-                word = line.split('/')[0].strip().lower()
-                if 8>= len(word) >= 4 and word.isalpha():
-                    words.append(word)
+        if os.path.exists(dict_dir + lang + ".dic"):
+            dict_path += lang + ".dic"
+        elif os.path.exists(dict_dir + lang.split('_')[0] + ".dic"):
+            dict_path += lang.split('_')[0] + ".dic"
+        elif next(filter(lambda e: e.endswith(".dic") and e.startswith(lang.split('_')[0]),
+                        os.listdir(dict_dir)),
+                None):
+            dict_path += next(filter(lambda e: e.endswith(".dic") and e.startswith(lang.split('_')[0]),
+                                    os.listdir(dict_dir)))
+        elif next(filter(lambda e: e.endswith(".dic") and e.startswith("en"),
+                        os.listdir(dict_dir)),
+                None):
+            dict_path += next(filter(lambda e: e.endswith(".dic") and e.startswith("en"),
+                                    os.listdir(dict_dir)))
+
+        try: # this currently fails for german dictionarys, will need to be investigated and improved in the future...
+            with open(dict_path, "r") as dict:
+                next(dict)
+                for line in dict:
+                    word = line.split('/')[0].strip().lower()
+                    if 8>= len(word) >= 4 and word.isalpha():
+                        words.append(word)
+        except:
+            print("Could not read dictionary for " + lang, file=sys.stderr)
+            dict_path = dict_dir + next(filter(lambda e: e.endswith(".dic") and e.startswith("en"),
+                                               os.listdir(dict_dir)))
+            with open(dict_path, "r") as dict:
+                next(dict)
+                for line in dict:
+                    word = line.split('/')[0].strip().lower()
+                    if 8>= len(word) >= 4 and word.isalpha():
+                        words.append(word)
+
         return words
 
     def generate_random(self):
