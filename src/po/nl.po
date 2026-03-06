@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: io.github.unicornyrainbow.secrets\n"
 "Report-Msgid-Bugs-To: unicornyrainbow@protonmail.com\n"
 "POT-Creation-Date: 2026-03-04 15:53+0100\n"
-"PO-Revision-Date: 2024-06-24 22:00+0200\n"
+"PO-Revision-Date: 2026-03-06 19:44+0100\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <vistausss@fastmail.com>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.8\n"
 
 #: src/ui/secrets.ui:59
 msgid "Generate"
@@ -36,7 +36,7 @@ msgstr "Wachtwoord"
 
 #: src/ui/secrets.ui:124
 msgid "Random"
-msgstr ""
+msgstr "Willekeurig"
 
 #: src/ui/secrets.ui:142 src/ui/secrets.ui:228 src/ui/secrets.ui:304
 msgid "Length"
@@ -60,24 +60,23 @@ msgstr "Speciale tekens"
 
 #: src/ui/secrets.ui:210
 msgid "Memorable"
-msgstr ""
+msgstr "Makkelijk te onthouden"
 
 #: src/ui/secrets.ui:240
 msgid "Capitalize"
-msgstr ""
+msgstr "In hoofdletters"
 
 #: src/ui/secrets.ui:251
-#, fuzzy
 msgid "Include Digits"
-msgstr ""
+msgstr "Met getallen"
 
 #: src/ui/secrets.ui:262 src/ui/secrets.ui:271
 msgid "Delimiter"
-msgstr ""
+msgstr "Scheidingsteken"
 
 #: src/ui/secrets.ui:286
 msgid "Pin"
-msgstr ""
+msgstr "Pincode"
 
 #. Details
 #: src/ui/secrets.ui:345
