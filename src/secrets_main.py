@@ -150,15 +150,15 @@ class MainWindow(Adw.Window):
 
         dict_encoding = self.get_hunspell_encoding(dict_path.replace(".dic", ".aff"))
 
-        try:
-            with open(dict_path, "r", encoding="dict_encoding") as dict:
-                next(dict)
-                for line in dict:
-                    word = line.split('/')[0].strip().lower()
-                    if 8>= len(word) >= 4 and word.isalpha():
-                        words.append(word)
-        except:
-            print("Could not read dictionary for " + lang, file=sys.stderr)
+        #try:
+        with open(dict_path, "r", encoding=dict_encoding) as dict:
+            next(dict)
+            for line in dict:
+                word = line.split('/')[0].strip().lower()
+                if 8>= len(word) >= 4 and word.isalpha():
+                    words.append(word)
+        #except:
+        #    print("Could not read dictionary for " + lang, file=sys.stderr)
 
         return words
 
