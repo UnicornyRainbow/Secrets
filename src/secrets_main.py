@@ -61,6 +61,8 @@ _ = gettext.gettext
 class State:
     width: int
     height: int
+    stackVisible: string
+
     length: int
     useDigits: bool
     useUpperCase: bool
@@ -69,44 +71,79 @@ class State:
     specialCharacters: str
     specialCharactersExpander: bool
 
+    memLength: int
+    capitalize: bool
+    includeDigits: bool
+    delimiter: str
+    delimiterExpander: bool
+
+    pinLength: int
+
 @Gtk.Template(filename=UI_PATH)
 class MainWindow(Adw.Window):
     __gtype_name__ = "MainWindow"
 
-    mainBox: Gtk.Box = Gtk.Template.Child()
-    popover: Gtk.Popover = Gtk.Template.Child()
-    popoverBox: Gtk.Box = Gtk.Template.Child()
+    # global
+    aboutDialog: Adw.AboutDialog = Gtk.Template.Child()
+    stack: Adw.ViewStack = Gtk.Template.Child()
     password: Adw.PasswordEntryRow = Gtk.Template.Child()
-    specialCharacters: Adw.EntryRow = Gtk.Template.Child()
-    useDigits: Gtk.Switch = Gtk.Template.Child()
+
+    # random
+    ranLengthSpin: Gtk.SpinButton = Gtk.Template.Child()
+    ranLengthSpinAdjustment: Gtk.Adjustment = Gtk.Template.Child()
     useUpperCase: Gtk.Switch = Gtk.Template.Child()
     useLowerCase: Gtk.Switch = Gtk.Template.Child()
+    useDigits: Gtk.Switch = Gtk.Template.Child()
     useSpecialCharacters: Gtk.Switch = Gtk.Template.Child()
+    specialCharacters: Adw.EntryRow = Gtk.Template.Child()
     specialCharactersExpander: Adw.ExpanderRow = Gtk.Template.Child()
-    lengthSpin: Gtk.SpinButton = Gtk.Template.Child()
-    lengthSpinAdjustment: Gtk.Adjustment = Gtk.Template.Child()
-    aboutDialog: Adw.AboutDialog = Gtk.Template.Child()
 
-    @Gtk.Template.Callback()
-    def on_destroy(self, *args):
-        with open(XDG_CONFIG_HOME + "/config.json", "w") as file:
-            width, height = self.get_default_size()
-            state = State(
-                width=width,
-                height=height,
-                length=self.lengthSpinAdjustment.get_value(),
-                useDigits=self.useDigits.get_active(),
-                useUpperCase=self.useUpperCase.get_active(),
-                useLowerCase=self.useLowerCase.get_active(),
-                useSpecialCharacters=self.useSpecialCharacters.get_active(),
-                specialCharacters=self.specialCharacters.get_text(),
-                specialCharactersExpander=self.specialCharactersExpander.get_expanded()
-            )
-            jsonstate=json.dumps(asdict(state))
-            file.write(jsonstate)
+    # memorable
+    memLengthSpin: Gtk.SpinButton = Gtk.Template.Child()
+    memLengthSpinAdjustment: Gtk.Adjustment = Gtk.Template.Child()
+    capitalize: Gtk.Switch = Gtk.Template.Child()
+    includeDigits: Gtk.Switch = Gtk.Template.Child()
+    delimiter: Adw.EntryRow = Gtk.Template.Child()
+    delimiterExpander: Adw.ExpanderRow = Gtk.Template.Child()
 
-    @Gtk.Template.Callback()
-    def generate_clicked(self, widget: Gtk.Button):
+    # pin
+    pinLengthSpin: Gtk.SpinButton = Gtk.Template.Child()
+    pinLengthSpinAdjustment: Gtk.Adjustment = Gtk.Template.Child()
+
+    dictionary = []
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.dictionary = self.read_dictionary()
+
+    def read_dictionary(self):
+        lang = locale.getlocale()[0]
+        dict_dir = "/usr/share/hunspell/"
+        dict_path = dict_dir
+        words = []
+        if os.path.exists(dict_dir + lang + ".dic"):
+            dict_path += lang + ".dic"
+        elif os.path.exists(dict_dir + lang.split('_')[0] + ".dic"):
+            dict_path += lang.split('_')[0] + ".dic"
+        elif next(filter(lambda e: e.endswith(".dic") and e.startswith(lang.split('_')[0]),
+                         os.listdir(dict_dir)),
+                  None):
+            dict_path += next(filter(lambda e: e.endswith(".dic") and e.startswith(lang.split('_')[0]),
+                                     os.listdir(dict_dir)))
+        elif next(filter(lambda e: e.endswith(".dic") and e.startswith("en"),
+                         os.listdir(dict_dir)),
+                  None):
+            dict_path += next(filter(lambda e: e.endswith(".dic") and e.startswith("en"),
+                                     os.listdir(dict_dir)))
+        with open(dict_path, "r") as dict:
+            next(dict)
+            for line in dict:
+                word = line.split('/')[0].strip().lower()
+                if 8>= len(word) >= 4 and word.isalpha():
+                    words.append(word)
+        return words
+
+    def generate_random(self):
         chars = ""
         if self.useDigits.get_active():
             chars += string.digits
@@ -116,7 +153,63 @@ class MainWindow(Adw.Window):
             chars += string.ascii_lowercase
         if self.useSpecialCharacters.get_active():
             chars += self.specialCharacters.get_text()
-        self.password.set_text("".join(secrets.choice(chars) for i in range(int(self.lengthSpin.get_value()))))
+        return "".join(secrets.choice(chars)
+                       for i in
+                       range(int(self.ranLengthSpin.get_value())))
+
+    def generate_memorable(self):
+        words = [secrets.choice(self.dictionary) for i in range(int(self.memLengthSpin.get_value()))]
+
+        if self.capitalize.get_active():
+            words = [e.capitalize() for e in words]
+        if self.includeDigits.get_active():
+            words = [e + secrets.choice(string.digits) for e in words]
+
+        return self.delimiter.get_text().join(words)
+
+    def generate_pin(self):
+        return "".join(secrets.choice(string.digits)
+                       for i in
+                       range(int(self.pinLengthSpin.get_value())))
+
+    @Gtk.Template.Callback()
+    def on_destroy(self, *args):
+        with open(XDG_CONFIG_HOME + "/config.json", "w") as file:
+            width, height = self.get_default_size()
+            state = State(
+                width=width,
+                height=height,
+                stackVisible=self.stack.get_visible_child_name(),
+
+                length=self.ranLengthSpinAdjustment.get_value(),
+                useDigits=self.useDigits.get_active(),
+                useUpperCase=self.useUpperCase.get_active(),
+                useLowerCase=self.useLowerCase.get_active(),
+                useSpecialCharacters=self.useSpecialCharacters.get_active(),
+                specialCharacters=self.specialCharacters.get_text(),
+                specialCharactersExpander=self.specialCharactersExpander.get_expanded(),
+
+                memLength=self.memLengthSpinAdjustment.get_value(),
+                capitalize=self.capitalize.get_active(),
+                includeDigits=self.includeDigits.get_active(),
+                delimiter=self.delimiter.get_text(),
+                delimiterExpander=self.delimiterExpander.get_expanded(),
+
+                pinLength=self.pinLengthSpinAdjustment.get_value(),
+            )
+            jsonstate=json.dumps(asdict(state))
+            file.write(jsonstate)
+
+    @Gtk.Template.Callback()
+    def generate_clicked(self, widget: Gtk.Button):
+        match self.stack.get_visible_child_name():
+            case "random":
+                password = self.generate_random()
+            case "memorable":
+                password = self.generate_memorable()
+            case "pin":
+                password = self.generate_pin()
+        self.password.set_text(password)
 
     @Gtk.Template.Callback()
     def copy_password_clicked(self, widget: Gtk.Button):
@@ -128,25 +221,46 @@ class MainWindow(Adw.Window):
     def reset_clicked(self, widget: Gtk.Button):
 
         state = State(
-            width=300,
-            height=445,
+            width=500,
+            height=500,
+            stackVisible="random",
+
             length=20,
             useDigits=True,
             useUpperCase=True,
             useLowerCase=True,
             useSpecialCharacters=True,
             specialCharacters=string.punctuation,
-            specialCharactersExpander=False
+            specialCharactersExpander=False,
+
+            memLength=5,
+            capitalize=True,
+            includeDigits=False,
+            delimiter="-",
+            delimiterExpander=False,
+
+            pinLength=6,
         )
 
-        self.specialCharacters.set_text(state.specialCharacters)
-        self.useSpecialCharacters.set_active(state.useSpecialCharacters)
-        self.useLowerCase.set_active(state.useLowerCase)
-        self.useUpperCase.set_active(state.useUpperCase)
-        self.useDigits.set_active(state.useDigits)
-        self.lengthSpinAdjustment.set_value(state.length)
         self.set_default_size(state.width, state.height)
+        self.stack.set_visible_child_name(state.stackVisible)
+
+        self.ranLengthSpinAdjustment.set_value(state.length)
+        self.useUpperCase.set_active(state.useUpperCase)
+        self.useLowerCase.set_active(state.useLowerCase)
+        self.useDigits.set_active(state.useDigits)
+        self.useSpecialCharacters.set_active(state.useSpecialCharacters)
+        self.specialCharacters.set_text(state.specialCharacters)
         self.specialCharactersExpander.set_expanded(state.specialCharactersExpander)
+
+        self.memLengthSpinAdjustment.set_value(state.memLength)
+        self.capitalize.set_active(state.capitalize)
+        self.includeDigits.set_active(state.includeDigits)
+        self.delimiter.set_text(state.delimiter)
+        self.delimiterExpander.set_expanded(state.delimiterExpander)
+
+        self.pinLengthSpinAdjustment.set_value(state.pinLength)
+        self.present()
 
         with open(XDG_CONFIG_HOME + "/config.json", "w") as file:
             jsonstate=json.dumps(asdict(state))
@@ -165,24 +279,32 @@ class MyApp(Adw.Application):
     def on_activate(self, app):
         window = MainWindow(application=self)
 
-        window.mainBox.remove(window.mainBox.get_first_child())
-        window.popover.set_child(window.popoverBox)
-
         window.specialCharacters.set_text(string.punctuation)
+        window.delimiter.set_text("-")
 
         if os.path.exists(XDG_CONFIG_HOME + "/config.json"):
             try:
                 with open(XDG_CONFIG_HOME + "/config.json", "r") as file:
                     state = State(**json.load(file))
 
-                    window.specialCharacters.set_text(state.specialCharacters)
-                    window.useSpecialCharacters.set_active(state.useSpecialCharacters)
-                    window.useLowerCase.set_active(state.useLowerCase)
-                    window.useUpperCase.set_active(state.useUpperCase)
-                    window.useDigits.set_active(state.useDigits)
-                    window.lengthSpinAdjustment.set_value(state.length)
                     window.set_default_size(state.width, state.height)
+                    window.stack.set_visible_child_name(state.stackVisible)
+
+                    window.ranLengthSpinAdjustment.set_value(state.length)
+                    window.useUpperCase.set_active(state.useUpperCase)
+                    window.useLowerCase.set_active(state.useLowerCase)
+                    window.useDigits.set_active(state.useDigits)
+                    window.useSpecialCharacters.set_active(state.useSpecialCharacters)
+                    window.specialCharacters.set_text(state.specialCharacters)
                     window.specialCharactersExpander.set_expanded(state.specialCharactersExpander)
+
+                    window.memLengthSpinAdjustment.set_value(state.memLength)
+                    window.capitalize.set_active(state.capitalize)
+                    window.includeDigits.set_active(state.includeDigits)
+                    window.delimiter.set_text(state.delimiter)
+                    window.delimiterExpander.set_expanded(state.delimiterExpander)
+
+                    window.pinLengthSpinAdjustment.set_value(state.pinLength)
             except:
                 pass
 

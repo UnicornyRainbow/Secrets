@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.unicornyrainbow.secrets\n"
 "Report-Msgid-Bugs-To: unicornyrainbow@protonmail.com\n"
-"POT-Creation-Date: 2024-06-21 22:50+0200\n"
+"POT-Creation-Date: 2026-03-04 15:53+0100\n"
 "PO-Revision-Date: 2024-06-24 22:00+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <vistausss@fastmail.com>\n"
@@ -18,49 +18,75 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/res/secrets.ui:86
-msgid "About"
-msgstr "Over"
-
-#: src/res/secrets.ui:150
-msgid "Digits"
-msgstr "Getallen"
-
-#. Details
-#: src/res/secrets.ui:197
-msgid "Easily generate passwords with different conditions to fit the requirements "
-"of various websites and apps."
-msgstr "Genereer op eenvoudige wijze wachtwoorden met verschillende eisen, "
-"afhankelijk van de gebruikte websites en apps."
-
-#: src/res/secrets.ui:37
+#: src/ui/secrets.ui:59
 msgid "Generate"
 msgstr "Genereren"
 
-#: src/res/secrets.ui:116
-msgid "Length"
-msgstr "Lengte"
-
-#: src/res/secrets.ui:139
-msgid "Lowercase"
-msgstr "Kleine letters"
-
-#: src/res/secrets.ui:95
-msgid "Password"
-msgstr "Wachtwoord"
-
-#: src/res/secrets.ui:79
+#: src/ui/secrets.ui:90
 msgid "Reset window"
 msgstr "Standaardwaarden"
 
-#: src/res/secrets.ui:161 src/res/secrets.ui:170
-msgid "Special Characters"
-msgstr "Speciale tekens"
+#: src/ui/secrets.ui:97
+msgid "About"
+msgstr "Over"
 
-#: src/res/secrets.ui:128
+#: src/ui/secrets.ui:106
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: src/ui/secrets.ui:124
+msgid "Random"
+msgstr ""
+
+#: src/ui/secrets.ui:142 src/ui/secrets.ui:228 src/ui/secrets.ui:304
+msgid "Length"
+msgstr "Lengte"
+
+#: src/ui/secrets.ui:154
 msgid "Uppercase"
 msgstr "Hoofdletters"
 
-#: src/secrets_main.py
-msgid "App Name"
-msgstr "Naam van toepassing/app"
+#: src/ui/secrets.ui:165
+msgid "Lowercase"
+msgstr "Kleine letters"
+
+#: src/ui/secrets.ui:176
+msgid "Digits"
+msgstr "Getallen"
+
+#: src/ui/secrets.ui:187 src/ui/secrets.ui:196
+msgid "Special Characters"
+msgstr "Speciale tekens"
+
+#: src/ui/secrets.ui:210
+msgid "Memorable"
+msgstr ""
+
+#: src/ui/secrets.ui:240
+msgid "Capitalize"
+msgstr ""
+
+#: src/ui/secrets.ui:251
+#, fuzzy
+msgid "Include Digits"
+msgstr ""
+
+#: src/ui/secrets.ui:262 src/ui/secrets.ui:271
+msgid "Delimiter"
+msgstr ""
+
+#: src/ui/secrets.ui:286
+msgid "Pin"
+msgstr ""
+
+#. Details
+#: src/ui/secrets.ui:345
+msgid ""
+"Easily generate passwords with different conditions to fit the requirements "
+"of various websites and apps."
+msgstr ""
+"Genereer op eenvoudige wijze wachtwoorden met verschillende eisen, "
+"afhankelijk van de gebruikte websites en apps."
+
+#~ msgid "App Name"
+#~ msgstr "Naam van toepassing/app"
