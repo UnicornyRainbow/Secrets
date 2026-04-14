@@ -50,7 +50,11 @@ else:
 
 APP = "io.github.unicornyrainbow.secrets"
 
-locale.setlocale(locale.LC_ALL, locale.getlocale())
+try:
+    locale.setlocale(locale.LC_ALL, '') # get locale directly from $LANG
+except locale.Error:
+    locale.setlocale(locale.LC_ALL, 'C.UTF-8') # save fallback
+
 if sys.platform != "darwin":
     locale.bindtextdomain(APP, LOCALE_PATH)
 gettext.bindtextdomain(APP, LOCALE_PATH)
