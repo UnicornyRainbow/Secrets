@@ -41,12 +41,12 @@ else:
     LOCALE_PATH = "/app/share/locale"
 
 
-if os.environ.get("XDG_CACHE_HOME"):
-    XDG_CONFIG_HOME = os.environ.get("XDG_CACHE_HOME")
+if os.environ.get("XDG_CONFIG_HOME"):
+    XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME")
 else:
-    if not os.path.isdir("~/.cache/keycutter"):
-        os.makedirs("~/.cache/keycutter")
-    XDG_CONFIG_HOME = "~/.cache/keycutter"
+    if not os.path.isdir("~/.config/keycutter"):
+        os.makedirs("~/.config/keycutter")
+    XDG_CONFIG_HOME = "~/.config/keycutter"
 
 APP = "io.github.unicornyrainbow.secrets"
 
@@ -306,8 +306,16 @@ class MyApp(Adw.Application):
         window.delimiter.set_text("-")
 
         if os.path.exists(XDG_CONFIG_HOME + "/config.json"):
+            config = XDG_CONFIG_HOME + "/config.json"
+        # this should load config from previous location, can be removed in the future (currently 12.10.2026)
+        elif os.environ.get("XDG_CACHE_HOME") and os.path.exists(os.environ.get("XDG_CACHE_HOME") + "/config.json"):
+            config = os.environ.get("XDG_CACHE_HOME") + "/config.json"
+        else:
+            config = None
+        
+        if config:
             try:
-                with open(XDG_CONFIG_HOME + "/config.json", "r") as file:
+                with open(config, "r") as file:
                     state = State(**json.load(file))
 
                     window.set_default_size(state.width, state.height)
