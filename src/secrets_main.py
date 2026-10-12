@@ -41,12 +41,9 @@ else:
     LOCALE_PATH = "/app/share/locale"
 
 
-if os.environ.get("XDG_CONFIG_HOME"):
-    XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME")
-else:
-    if not os.path.isdir("~/.config/keycutter"):
-        os.makedirs("~/.config/keycutter")
-    XDG_CONFIG_HOME = "~/.config/keycutter"
+XDG_CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME", "~/.config/keycutter")
+if not os.path.isdir(XDG_CONFIG_HOME):
+    os.makedirs(XDG_CONFIG_HOME)
 
 APP = "io.github.unicornyrainbow.secrets"
 
@@ -65,7 +62,7 @@ _ = gettext.gettext
 class State:
     width: int
     height: int
-    stackVisible: string
+    stackVisible: str
 
     length: int
     useDigits: bool
@@ -114,13 +111,13 @@ class MainWindow(Adw.Window):
     pinLengthSpin: Gtk.SpinButton = Gtk.Template.Child()
     pinLengthSpinAdjustment: Gtk.Adjustment = Gtk.Template.Child()
 
-    dictionary = []
+    dictionary: list[str] = []
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
         self.dictionary = self.read_dictionary()
 
-    def get_hunspell_encoding(_, aff_path):
+    def get_hunspell_encoding(_, aff_path) -> str:
         try:
             with open(aff_path, "r", encoding="ascii", errors="ignore") as aff:
                 for line in aff:
@@ -131,8 +128,9 @@ class MainWindow(Adw.Window):
             print("Could not read " + aff_path, file=sys.stderr)
         return "utf-8"
 
-    def read_dictionary(self):
-        lang = locale.getlocale()[0]
+    def read_dictionary(self) -> list[str]:
+        loc = locale.getlocale()[0]
+        lang = loc if loc is not None else "en_US"
         dict_dir = "/usr/share/hunspell/"
         dict_path = dict_dir
         words = []
@@ -166,7 +164,7 @@ class MainWindow(Adw.Window):
 
         return words
 
-    def generate_random(self):
+    def generate_random(self) -> str:
         chars = ""
         if self.useDigits.get_active():
             chars += string.digits
@@ -180,7 +178,7 @@ class MainWindow(Adw.Window):
                        for i in
                        range(int(self.ranLengthSpin.get_value())))
 
-    def generate_memorable(self):
+    def generate_memorable(self) -> str:
         words = [secrets.choice(self.dictionary) for i in range(int(self.memLengthSpin.get_value()))]
 
         if self.capitalize.get_active():
@@ -190,13 +188,13 @@ class MainWindow(Adw.Window):
 
         return self.delimiter.get_text().join(words)
 
-    def generate_pin(self):
+    def generate_pin(self) -> str:
         return "".join(secrets.choice(string.digits)
                        for i in
                        range(int(self.pinLengthSpin.get_value())))
 
     @Gtk.Template.Callback()
-    def on_destroy(self, *args):
+    def on_destroy(self, *args) -> None:
         with open(XDG_CONFIG_HOME + "/config.json", "w") as file:
             width, height = self.get_default_size()
             state = State(
@@ -224,7 +222,7 @@ class MainWindow(Adw.Window):
             file.write(jsonstate)
 
     @Gtk.Template.Callback()
-    def generate_clicked(self, widget: Gtk.Button):
+    def generate_clicked(self, widget: Gtk.Button) -> None:
         match self.stack.get_visible_child_name():
             case "random":
                 password = self.generate_random()
@@ -235,13 +233,13 @@ class MainWindow(Adw.Window):
         self.password.set_text(password)
 
     @Gtk.Template.Callback()
-    def copy_password_clicked(self, widget: Gtk.Button):
+    def copy_password_clicked(self, widget: Gtk.Button) -> None:
         Gdk.Display.get_clipboard(Gdk.Display.get_default()).set_content(
             Gdk.ContentProvider.new_for_value(self.password.get_text())
         )
 
     @Gtk.Template.Callback()
-    def reset_clicked(self, widget: Gtk.Button):
+    def reset_clicked(self, widget: Gtk.Button) -> None:
 
         state = State(
             width=500,
@@ -290,16 +288,16 @@ class MainWindow(Adw.Window):
             file.write(jsonstate)
 
     @Gtk.Template.Callback()
-    def about_clicked(self, *args):
+    def about_clicked(self, *args) -> None:
         self.aboutDialog.present(self)
 
 
 class MyApp(Adw.Application):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
         self.connect("activate", self.on_activate)
 
-    def on_activate(self, app):
+    def on_activate(self, app) -> None:
         window = MainWindow(application=self)
 
         window.specialCharacters.set_text(string.punctuation)
@@ -308,8 +306,8 @@ class MyApp(Adw.Application):
         if os.path.exists(XDG_CONFIG_HOME + "/config.json"):
             config = XDG_CONFIG_HOME + "/config.json"
         # this should load config from previous location, can be removed in the future (currently 12.10.2026)
-        elif os.environ.get("XDG_CACHE_HOME") and os.path.exists(os.environ.get("XDG_CACHE_HOME") + "/config.json"):
-            config = os.environ.get("XDG_CACHE_HOME") + "/config.json"
+        elif os.path.exists(os.environ.get("XDG_CACHE_HOME", "~/.cache/keycutter") + "/config.json"):
+            config = os.environ.get("XDG_CACHE_HOME", "~/.cache/keycutter") + "/config.json"
         else:
             config = None
         
